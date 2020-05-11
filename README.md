@@ -48,6 +48,6 @@ Ngoài ra còn một số thư mục phụ
 
 Building code structure: https://www.coreycleary.me/project-structure-for-an-express-rest-api-when-there-is-no-standard-way/
 
-Sequelize docs: https://www.coreycleary.me/project-structure-for-an-express-rest-api-when-there-is-no-standard-way/
+Sequelize docs: https://sequelize.org/v5/
 
 Final project description: https://hackmd.io/@nndkhoa9/wnc-ibprj
