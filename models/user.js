@@ -9,21 +9,34 @@ const Users = sequelize.define('users', {
     primaryKey: true,
     type: Sequelize.INTEGER
   },
-  name: {
-    type: Sequelize.STRING,
-    allowNULL: false
-  },
   email: {
     type: Sequelize.STRING,
-    allowNULL: false
+    allowNull: false
+  },
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false
   },
   username: {
     type: Sequelize.STRING,
-    allowNULL: false
+    allowNull: false
+  },
+  avatar: {
+    type: Sequelize.STRING,
+    defaultValue: 'https://c7.uihere.com/files/592/884/975/programmer-computer-programming-computer-software-computer-icons-programming-language-avatar.jpg'
+    //default avatar
+  },
+  phone: {
+    type: Sequelize.STRING,
+    allowNull: false
   },
   password: {
     type: Sequelize.STRING,
-    allowNULL: false
+    allowNull: false
+  },
+  isDeleted: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
   },
   createdAt: {
     allowNull: false,
@@ -43,5 +56,7 @@ Users.beforeCreate((userInstance, optionsObject) => {
 Users.prototype.validPassword = function (password) {
   return crypt.comparePassword(password, this.password)
 }
+
+Users.sync({ alter: true }) //create table if not exist
 
 export default Users
