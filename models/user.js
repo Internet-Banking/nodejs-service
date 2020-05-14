@@ -1,6 +1,6 @@
 'use strict'
 import { sequelize, Sequelize } from '../src/db'
-import crypt from '../src/utils/crypt.utils'
+import crypt from '../src/utils/crypt'
 
 const Users = sequelize.define('users', {
   id: {

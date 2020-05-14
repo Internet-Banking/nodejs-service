@@ -4,7 +4,7 @@ import {
   DB_HOST, DB_USERNAME,
   DB_PASSWORD, DB_NAME, DB_PORT
 } from '../config'
-import debug from '../utils/debug.utils'
+import debug from '../utils/debug'
 
 const NAMESPACE = `DATABASE-${moment.utc().toISOString()}`
 //connect postgreSQL with sequelize
