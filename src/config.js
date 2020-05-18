@@ -14,3 +14,5 @@ export const RSA_PRIVATE_KEY =
 '-----BEGIN RSA PRIVATE KEY-----' + process.env.RSA_PRIVATE_KEY + '-----END RSA PRIVATE KEY-----'
 export const RSA_PUBLIC_KEY =
 '-----BEGIN PUBLIC KEY-----' + process.env.RSA_PUBLIC_KEY + '-----END PUBLIC KEY-----'
+export const PARTNER_CODE_RSA = process.env.PARTNER_CODE_RSA
+export const PARTNER_CODE_PGP = process.env.PARTNER_CODE_PGP
