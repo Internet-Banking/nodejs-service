@@ -1,4 +1,7 @@
 import httpStatusCodes from 'http-status-codes'
+import { sortObject } from '../utils/objectHandler'
+import { HASH_SECRET } from '../config'
+import crypto from 'crypto'
 
 //validate property of req by schema
 export const schemaValidator = (schema, property) => {
@@ -31,6 +34,25 @@ export const expiryValidator = (property) => {
     }
     else {
       next()
+    }
+  }
+}
+
+//validate if other keys was modified or not
+export const secureHashValidator = (property) => {
+  return async (req, res, next) => {
+    const propertyObject = sortObject(req[property])
+    const queryHash = propertyObject.secureHash
+    delete propertyObject.secureHash
+
+    const stringifiedPropertyObject = JSON.stringify(propertyObject)
+    const hash = crypto.createHmac('sha256', HASH_SECRET).update(stringifiedPropertyObject).digest('hex')
+
+    if (hash === queryHash) {
+      next()
+    }
+    else {
+      res.status(httpStatusCodes.BAD_REQUEST).json({ message: 'Not secure request!' })
     }
   }
 }
