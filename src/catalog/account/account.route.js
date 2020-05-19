@@ -1,6 +1,6 @@
 import express from 'express'
-import { schemaValidator, expiryValidator, secureHashValidator } from '../../middlewares/requestValidator'
-import { getAccountInfoQuerySchema } from '../../schemas/index'
+import { schemaValidator, expiryValidator, secureHashValidator } from '../../middlewares/requestValidators'
+import { getAccountInfoQuerySchema } from '../../schemas/partnerRequest'
 
 const router = express.Router()
 

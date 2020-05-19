@@ -17,3 +17,4 @@ export const RSA_PUBLIC_KEY =
 export const PARTNER_CODE_RSA = process.env.PARTNER_CODE_RSA
 export const PARTNER_CODE_PGP = process.env.PARTNER_CODE_PGP
 export const HASH_SECRET = process.env.HASH_SECRET
+export const PARTNER_REQUEST_EXPIRED_TIME = 60000 //60s

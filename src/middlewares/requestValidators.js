@@ -1,6 +1,6 @@
 import httpStatusCodes from 'http-status-codes'
 import { sortObject } from '../utils/objectHandler'
-import { HASH_SECRET } from '../config'
+import { HASH_SECRET, PARTNER_REQUEST_EXPIRED_TIME } from '../config'
 import crypto from 'crypto'
 
 //validate property of req by schema
@@ -29,8 +29,8 @@ export const expiryValidator = (property) => {
 
     const elapsedTimeInMilliseconds = now.getTime() - reqCreatedAt.getTime()
 
-    if (elapsedTimeInMilliseconds > 60000) {
-      res.status(httpStatusCodes.BAD_REQUEST).json({ message: 'Request is expired!' })
+    if (elapsedTimeInMilliseconds > PARTNER_REQUEST_EXPIRED_TIME) {
+      res.status(httpStatusCodes.BAD_REQUEST).json({ message: 'Request is expired.' })
     }
     else {
       next()
@@ -52,7 +52,7 @@ export const secureHashValidator = (property) => {
       next()
     }
     else {
-      res.status(httpStatusCodes.BAD_REQUEST).json({ message: 'Not secure request!' })
+      res.status(httpStatusCodes.BAD_REQUEST).json({ message: 'This request is not secured.' })
     }
   }
 }

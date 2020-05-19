@@ -5,7 +5,10 @@ export const getAccountInfoQuerySchema = Joi.object({
   partnerCode: Joi
     .string()
     .valid(PARTNER_CODE_PGP, PARTNER_CODE_RSA)
-    .required(),
+    .required()
+    .messages({
+      'any.only': 'partnerCode is not valid.'
+    }),
   createdAt: Joi
     .date()
     .required()
