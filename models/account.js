@@ -1,6 +1,6 @@
 'use strict';
-'use strict'
 import { sequelize, Sequelize } from '../src/db'
+import { ACCOUNT_TYPES } from '../src/constants/index'
 
 const Accounts = sequelize.define('accounts', {
   id: {
@@ -22,8 +22,8 @@ const Accounts = sequelize.define('accounts', {
     defaultValue: 0
   },
   type: {
-    type: Sequelize.ENUM(['SAVING', 'PAYMENT']),
-    defaultValue: 'SAVING',
+    type: Sequelize.ENUM([ACCOUNT_TYPES.SAVING, ACCOUNT_TYPES.PAYMENT]),
+    defaultValue: ACCOUNT_TYPES.SAVING,
     allowNull: false
   },
   isDeleted: {
@@ -39,7 +39,5 @@ const Accounts = sequelize.define('accounts', {
     type: Sequelize.DATE
   }
 }, {})
-
-Accounts.sync({ alter: true }) //create table if not exist
 
 export default Accounts

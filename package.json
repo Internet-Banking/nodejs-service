@@ -14,14 +14,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nhoknguyen00/Internet-Banking-PTUDWNC.git"
+    "url": "git+https://github.com/Internet-Banking/NodeJS-Service"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/nhoknguyen00/Internet-Banking-PTUDWNC/issues"
+    "url": "https://github.com/Internet-Banking/NodeJS-Service/issues"
   },
-  "homepage": "https://github.com/nhoknguyen00/Internet-Banking-PTUDWNC#readme",
+  "homepage": "https://github.com/Internet-Banking/NodeJS-Service#readme",
   "dependencies": {
     "@babel/runtime-corejs2": "^7.9.6",
     "@hapi/joi": "^17.1.1",
@@ -33,6 +33,7 @@
     "express": "^4.17.1",
     "http": "^0.0.1-security",
     "http-status-codes": "^1.4.0",
+    "keymirror": "^0.1.1",
     "moment": "^2.25.3",
     "morgan": "^1.10.0",
     "node-rsa": "^1.0.8",

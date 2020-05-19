@@ -1,7 +1,7 @@
 import Joi from '@hapi/joi'
 import { PARTNER_CODE_PGP, PARTNER_CODE_RSA } from '../config'
 
-export const getAccountInfoQuerySchema = Joi.object({
+export const getUserInfoQuerySchema = Joi.object({
   partnerCode: Joi
     .string()
     .valid(PARTNER_CODE_PGP, PARTNER_CODE_RSA)

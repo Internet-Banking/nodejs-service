@@ -1,5 +1,5 @@
 import Users from './user'
-import Accounts from './accounts'
+import Accounts from './account'
 
 Accounts.belongsTo(Users, { foreignKey: 'userId' })
 

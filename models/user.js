@@ -57,6 +57,4 @@ Users.prototype.validPassword = function (password) {
   return crypt.comparePassword(password, this.password)
 }
 
-Users.sync({ alter: true }) //create table if not exist
-
 export default Users

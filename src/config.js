@@ -11,9 +11,9 @@ export const DB_NAME = process.env.DB_NAME || 'internetBanking'
 
 export const SALT_ROUNDS = process.env.SALT_ROUNDS
 export const RSA_PRIVATE_KEY =
-'-----BEGIN RSA PRIVATE KEY-----' + process.env.RSA_PRIVATE_KEY + '-----END RSA PRIVATE KEY-----'
+'-----BEGIN RSA PRIVATE KEY-----\n' + process.env.RSA_PRIVATE_KEY + '\n-----END RSA PRIVATE KEY-----'
 export const RSA_PUBLIC_KEY =
-'-----BEGIN PUBLIC KEY-----' + process.env.RSA_PUBLIC_KEY + '-----END PUBLIC KEY-----'
+'-----BEGIN PUBLIC KEY-----\n' + process.env.RSA_PUBLIC_KEY + '\n-----END PUBLIC KEY-----'
 export const PARTNER_CODE_RSA = process.env.PARTNER_CODE_RSA
 export const PARTNER_CODE_PGP = process.env.PARTNER_CODE_PGP
 export const HASH_SECRET = process.env.HASH_SECRET

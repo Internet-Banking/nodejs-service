@@ -2,7 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 import morgan from 'morgan'
-import accountRoute from './catalog/account/account.route'
+import userRoute from './catalog/user/user.route'
 
 const app = express()
 app.use(morgan('[:date[clf]] :method :url :status :response-time ms - :res[content-length]'))
@@ -18,7 +18,7 @@ app.use(cors({
   credentials: true //Turn on cookie HTTP through CORS
 }))
 
-app.use('/account', accountRoute)
+app.use('/user', userRoute)
 
 //handling 'Not found' error
 //if the url does not match any above route => not found error
