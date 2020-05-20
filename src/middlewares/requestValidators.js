@@ -1,7 +1,7 @@
 import httpStatusCodes from 'http-status-codes'
+import crypto from 'crypto'
 import { sortObject } from '../utils/objectHandler'
 import { HASH_SECRET, PARTNER_REQUEST_EXPIRED_TIME } from '../config'
-import crypto from 'crypto'
 
 //validate property of req by schema
 export const schemaValidator = (schema, property) => {
@@ -54,5 +54,11 @@ export const secureHashValidator = (property) => {
     else {
       res.status(httpStatusCodes.BAD_REQUEST).json({ message: 'This request is not secured.' })
     }
+  }
+}
+
+export const asymmetricSignatureVerification = () => {
+  return async (req, res, next) => {
+    next()
   }
 }

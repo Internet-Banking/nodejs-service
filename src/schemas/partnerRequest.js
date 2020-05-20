@@ -1,7 +1,7 @@
 import Joi from '@hapi/joi'
 import { PARTNER_CODE_PGP, PARTNER_CODE_RSA } from '../config'
 
-export const getUserInfoQuerySchema = Joi.object({
+const partnerEssentialSchema = Joi.object({
   partnerCode: Joi
     .string()
     .valid(PARTNER_CODE_PGP, PARTNER_CODE_RSA)
@@ -21,4 +21,17 @@ export const getUserInfoQuerySchema = Joi.object({
     .example('c0fa1bc00531bd78ef38c628449c5102aeabd49b5dc3a2a516ea6ea959d6658e')
     .description(`JSON.stringify({ partnerCode, createdAt })
     hashed with crypto.createHmac("sha256", <secret>).update(<stringify>).digest("hex")`)
+})
+
+export const getUserInfoQuerySchema = partnerEssentialSchema
+
+export const increaseBalanceSchema = partnerEssentialSchema.append({
+  amount: Joi
+    .number()
+    .min(0)
+    .required()
+  // signature: Joi
+  //   .string()
+  //   .min(0)
+  //   .required()
 })
