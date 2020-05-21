@@ -19,8 +19,8 @@ const partnerEssentialSchema = Joi.object({
     .trim()
     .required()
     .example('c0fa1bc00531bd78ef38c628449c5102aeabd49b5dc3a2a516ea6ea959d6658e')
-    .description(`JSON.stringify({ partnerCode, createdAt })
-    hashed with crypto.createHmac("sha256", <secret>).update(<stringify>).digest("hex")`)
+    .description(`JSON.stringify(object without secureHash)
+    hashed with crypto.createHmac("sha256", HASH_SECRET).update(<stringifyObject>).digest("hex")`)
 })
 
 export const getUserInfoQuerySchema = partnerEssentialSchema

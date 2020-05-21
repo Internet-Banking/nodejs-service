@@ -71,7 +71,7 @@ export const asymmetricSignatureVerification = () => {
       next()
     }
     else {
-      res.status(httpStatusCodes.BAD_REQUEST).json({ message: 'Invalid signature' })
+      res.status(httpStatusCodes.UNAUTHORIZED).json({ message: 'Invalid signature' })
     }
   }
 }

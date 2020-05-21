@@ -10,6 +10,8 @@ Code structure được viết theo layered structure, 1 module (chia theo đố
 
 2. Controllers:
 
+- nên try catch ở đây
+
 - nhận req, res từ routes
 
 - lấy các keys trong body
@@ -34,20 +36,24 @@ Code structure được viết theo layered structure, 1 module (chia theo đố
 
 - không xử lý business logic
 
-- nên try catch khi connect với database
-
 Ngoài ra còn một số thư mục phụ
 
 - utils: define các utility functions xử lý tính toán nhỏ nhặt ở đây
 
+- constants: define constants
+
 - fetches: giao tiếp với API bên ngoài
 
 - middlewares: define các middleware ở đây
+
+- schemas: define các schemas dùng để validate request body/params/query ở đây
 
 # References:
 
 Building code structure: https://www.coreycleary.me/project-structure-for-an-express-rest-api-when-there-is-no-standard-way/
 
 Sequelize docs: https://sequelize.org/v5/
+
+Joi docs: https://hapi.dev/module/joi/
 
 Final project description: https://hackmd.io/@nndkhoa9/wnc-ibprj

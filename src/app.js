@@ -2,6 +2,10 @@ import express from 'express'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 import morgan from 'morgan'
+
+import yamljs from 'yamljs'
+import swaggerUi from 'swagger-ui-express'
+
 import partnerRoute from './catalog/partner/partner.route'
 
 const app = express()
@@ -18,6 +22,8 @@ app.use(cors({
   credentials: true //Turn on cookie HTTP through CORS
 }))
 
+const swaggerDocs = yamljs.load('./openapi.yaml')
+app.use('/documentation', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 app.use('/partner', partnerRoute)
 
 //handling 'Not found' error
