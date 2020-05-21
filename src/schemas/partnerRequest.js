@@ -29,9 +29,9 @@ export const increaseBalanceSchema = partnerEssentialSchema.append({
   amount: Joi
     .number()
     .min(0)
+    .required(),
+  signature: Joi
+    .string()
+    .min(0)
     .required()
-  // signature: Joi
-  //   .string()
-  //   .min(0)
-  //   .required()
 })

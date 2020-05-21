@@ -1,7 +1,10 @@
 import httpStatusCodes from 'http-status-codes'
 import crypto from 'crypto'
+import NodeRSA from 'node-rsa'
 import { sortObject } from '../utils/objectHandler'
-import { HASH_SECRET, PARTNER_REQUEST_EXPIRED_TIME } from '../config'
+import { HASH_SECRET, PARTNER_REQUEST_EXPIRED_TIME, RSA_PUBLIC_KEY } from '../config'
+
+const partnerPublicKey = new NodeRSA(RSA_PUBLIC_KEY)
 
 //validate property of req by schema
 export const schemaValidator = (schema, property) => {
@@ -59,6 +62,16 @@ export const secureHashValidator = (property) => {
 
 export const asymmetricSignatureVerification = () => {
   return async (req, res, next) => {
-    next()
+    const { signature } = req.body
+    delete req.body.signature
+
+    const isVerified = partnerPublicKey.verify(req.body, signature, 'base64', 'base64')
+
+    if (isVerified) {
+      next()
+    }
+    else {
+      res.status(httpStatusCodes.BAD_REQUEST).json({ message: 'Invalid signature' })
+    }
   }
 }

@@ -18,8 +18,8 @@ router.get('/user/:id',
 )
 
 router.patch('/account/:id',
-  asymmetricSignatureVerification(),
   schemaValidator(increaseBalanceSchema, 'body'),
+  asymmetricSignatureVerification(),
   expiryValidator('body'),
   secureHashValidator('body'),
   accountController.increaseBalanceById
