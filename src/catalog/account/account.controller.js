@@ -12,13 +12,13 @@ export const increaseBalanceById = async (req, res, next) => {
     const { amount } = req.body
 
     const result = await accountService.increaseBalanceById(id, amount)
-    delete result[0][0][0].isDeleted
-    delete result[0][0][0].createdAt
-    delete result[0][0][0].updatedAt
+    delete result.isDeleted
+    delete result.createdAt
+    delete result.updatedAt
 
     return res.status(httpStatusCodes.OK).json({
       message: MESSAGE.OK,
-      payload: result[0][0][0]
+      payload: result
     })
   }
   catch (err) {
