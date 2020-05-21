@@ -50,6 +50,8 @@ Ngoài ra còn một số thư mục phụ
 
 # References:
 
+Documentation: https://localhost:3000/documentation
+
 Building code structure: https://www.coreycleary.me/project-structure-for-an-express-rest-api-when-there-is-no-standard-way/
 
 Sequelize docs: https://sequelize.org/v5/
