@@ -1,6 +1,12 @@
 # How to run this source
 
-```yarn install``` và ```yarn dev```
+Install node_modules: ```yarn install```
+
+Run migrations: ```npx sequelize-cli db:migrate```
+
+Run seeds: ```npx sequelize-cli db:seed:all```
+
+Start server in development mode: ```yarn dev```
 
 # Source description
 
