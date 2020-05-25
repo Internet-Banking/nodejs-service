@@ -23,7 +23,7 @@ const reqBody = {
   amount: '10000',
   partnerCode: 'PARTNER_CODE_RSA',
   createdAt: '2020-05-21T02:47:30.829Z',
-  secureHash: crypto.createHmac("sha256", HASH_SECRET).update(stringifyBody).digest("hex")
+  secureHash: crypto.createHmac('sha256', HASH_SECRET).update(stringifyBody).digest('hex')
 }
 
 const signature = privateKey.sign(reqBody, 'base64');
