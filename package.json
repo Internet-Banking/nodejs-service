@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node src/index.js",
+    "start": "node build/src/index.js",
     "dev": "nodemon src/index.js --exec babel-node",
     "lint": "eslint src",
-    "build": "babel src -d build"
+    "build": "babel -d ./build/src ./src && babel -d ./build/models ./models"
   },
   "pre-commit": [
     "lint"
