@@ -6,7 +6,7 @@ info:
   contact:
     email: "miketuannguyen@gmail.com"
 servers:
-  - url: "http://internet-banking-service.herokuapp.com"
+  - url: "http://internet-banking-29-service.herokuapp.com"
 tags:
 - name: "user"
   description: "User resources"
