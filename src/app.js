@@ -8,6 +8,7 @@ import swaggerUi from 'swagger-ui-express'
 
 import partnerRoute from './catalog/partner/partner.route'
 import adminRoute from './catalog/admin/admin.route'
+import employeeRoute from './catalog/employee/employee.route'
 
 const app = express()
 app.use(morgan('[:date[clf]] :method :url :status :response-time ms - :res[content-length]'))
@@ -27,6 +28,7 @@ const swaggerDocs = yamljs.load('./openapi.yaml')
 app.use('/documentation', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 app.use('/partner', partnerRoute)
 app.use('/admin', adminRoute)
+app.use('/employee', employeeRoute)
 
 //handling 'Not found' error
 //if the url does not match any above route => not found error
