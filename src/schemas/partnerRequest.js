@@ -12,8 +12,8 @@ const partnerEssentialSchema = Joi.object({
   createdAt: Joi
     .date()
     .required()
-    .example('2020-05-18T08:59:33.170Z')
-    .description('get by new Date(), 60s expiry'),
+    .example('2020-05-27T05:26:17.723Z')
+    .description('get by moment.utc().toISOString(), 60s expiry'),
   secureHash: Joi
     .string()
     .trim()
