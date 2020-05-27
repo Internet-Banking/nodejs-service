@@ -1,10 +1,11 @@
 import httpStatusCodes from 'http-status-codes'
 import crypto from 'crypto'
 import NodeRSA from 'node-rsa'
-import { sortObject } from '../utils/objectHandler'
-import { HASH_SECRET, PARTNER_REQUEST_EXPIRED_TIME, RSA_PUBLIC_KEY } from '../config'
+import moment from 'moment'
+import { HASH_SECRET, PARTNER_REQUEST_EXPIRED_TIME, RSA_PARTNER_PUBLIC_KEY } from '../config'
+//dev team replace RSA_PARTNER_PUBLIC_KEY with RSA_PUBLIC_KEY when testing with partnerInstruction.js
 
-const partnerPublicKey = new NodeRSA(RSA_PUBLIC_KEY)
+const partnerPublicKey = new NodeRSA(RSA_PARTNER_PUBLIC_KEY)
 
 //validate property of req by schema
 export const schemaValidator = (schema, property) => {
@@ -27,10 +28,10 @@ export const schemaValidator = (schema, property) => {
 export const expiryValidator = (property) => {
   return async (req, res, next) => {
     const { createdAt } = req[property]
-    const now = new Date()
-    const reqCreatedAt = new Date(createdAt)
+    const now = moment.utc()
+    const reqCreatedAt = moment.utc(createdAt)
 
-    const elapsedTimeInMilliseconds = now.getTime() - reqCreatedAt.getTime()
+    const elapsedTimeInMilliseconds = now.diff(reqCreatedAt)
 
     if (elapsedTimeInMilliseconds > PARTNER_REQUEST_EXPIRED_TIME) {
       res.status(httpStatusCodes.BAD_REQUEST).json({ message: 'Request is expired.' })
@@ -44,14 +45,14 @@ export const expiryValidator = (property) => {
 //validate if other keys was modified or not
 export const secureHashValidator = (property) => {
   return async (req, res, next) => {
-    const propertyObject = sortObject(req[property])
+    const propertyObject = req[property]
     const queryHash = propertyObject.secureHash
     delete propertyObject.secureHash
 
     const stringifiedPropertyObject = JSON.stringify(propertyObject)
     const hash = crypto.createHmac('sha256', HASH_SECRET).update(stringifiedPropertyObject).digest('hex')
 
-    if (hash === queryHash) {
+    if (crypto.timingSafeEqual(Buffer.from(hash), Buffer.from(queryHash))) {
       next()
     }
     else {
