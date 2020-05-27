@@ -23,7 +23,7 @@ export const findUserByIdForPartner = async (req, res, next) => {
   catch (err) {
     debug.error(NAMESPACE, 'Error occured while finding user by id', err)
     return res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json({
-      message: 'Hệ thống gặp lỗi khi truy vấn thông tin người dùng.'
+      message: MESSAGE.INTERNAL_SERVER_ERROR
     })
   }
 }

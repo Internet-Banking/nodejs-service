@@ -30,7 +30,7 @@ export const loginAdmin = async (req, res, next) => {
   catch (err) {
     debug.error(NAMESPACE, 'Error occured while logging admin in', err)
     return res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json({
-      message: 'Hệ thống gặp lỗi khi quản trị viên đăng nhập.'
+      message: MESSAGE.INTERNAL_SERVER_ERROR
     })
   }
 }

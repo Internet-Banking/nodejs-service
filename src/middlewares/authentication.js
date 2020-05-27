@@ -2,6 +2,7 @@ import httpStatusCodes from 'http-status-codes'
 import jwt from 'jsonwebtoken'
 import { JWT_SECRET } from '../config'
 import { findAdminById } from '../catalog/admin/admin.repository'
+import { MESSAGE } from '../constants'
 import debug from '../utils/debug'
 
 export const adminAuthentication = () => {
@@ -22,7 +23,7 @@ export const adminAuthentication = () => {
 
       if (!adminInstance) {
         return res.status(httpStatusCodes.UNAUTHORIZED).json({
-          message: 'Quản trị viên phải đăng nhập mới có thể vào được trang này'
+          message: MESSAGE.INTERNAL_SERVER_ERROR
         })
       }
 
@@ -33,7 +34,7 @@ export const adminAuthentication = () => {
     catch (err) {
       debug.error('', 'Error occured while logging admin in', err)
       return res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json({
-        message: 'Hệ thống gặp lỗi.'
+        message: MESSAGE.INTERNAL_SERVER_ERROR
       })
     }
   }

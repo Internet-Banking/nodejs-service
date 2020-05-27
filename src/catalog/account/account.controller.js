@@ -24,7 +24,7 @@ export const increaseBalanceById = async (req, res, next) => {
   catch (err) {
     debug.error(NAMESPACE, 'Error occured while increasing balance of account', err)
     return res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json({
-      message: 'Hệ thống gặp lỗi khi nộp tiền vào tài khoản.'
+      message: MESSAGE.INTERNAL_SERVER_ERROR
     })
   }
 }
