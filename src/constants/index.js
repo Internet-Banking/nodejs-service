@@ -1,7 +1,7 @@
 import keyMirror from 'keymirror'
 
 export const MESSAGE = {
-  INTERNAL_SERVER_ERROR: 'Hệ thống lỗi',
+  INTERNAL_SERVER_ERROR: 'Internal server error',
   OK: 'OK'
 }
 

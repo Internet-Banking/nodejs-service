@@ -10,6 +10,8 @@ export const DB_PASSWORD = process.env.DB_PASSWORD || ''
 export const DB_NAME = process.env.DB_NAME || 'internetBanking'
 
 export const SALT_ROUNDS = process.env.SALT_ROUNDS
+export const JWT_SECRET = process.env.JWT_SECRET
+export const TOKEN_EXPIRED_TIME = process.env.TOKEN_EXPIRED_TIME
 
 //used to sign in request sent to partner
 export const RSA_PRIVATE_KEY = process.env.RSA_PRIVATE_KEY.replace(/\\n/g, '\n')
