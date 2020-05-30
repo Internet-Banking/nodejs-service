@@ -75,8 +75,8 @@ components:
       type: object
       properties:
         id:
-          type: number
-          example: 1
+          type: string
+          example: 9704883073231981
         userId:
           type: number
           example: 1

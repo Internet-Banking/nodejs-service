@@ -5,9 +5,8 @@ import { ACCOUNT_TYPES } from '../src/constants/index'
 const Accounts = sequelize.define('accounts', {
   id: {
     allowNull: false,
-    autoIncrement: true,
     primaryKey: true,
-    type: Sequelize.INTEGER
+    type: Sequelize.STRING
   },
   userId: {
     type: Sequelize.INTEGER,

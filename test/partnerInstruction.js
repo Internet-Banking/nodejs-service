@@ -13,7 +13,7 @@ const PARTNER_CODE_RSA = process.env.PARTNER_CODE_RSA
 const privateKey = new NodeRSA(RSA_PRIVATE_KEY)
 
 const serverUrl = 'https://internet-banking-29-service.herokuapp.com'
-const id = 1 //id of user or account
+const id = '9704880715158812' //id of user or account
 
 //query user's information
 /*const query = {

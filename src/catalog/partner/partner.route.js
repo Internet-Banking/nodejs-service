@@ -2,10 +2,15 @@ import express from 'express'
 import * as userController from '../user/user.controller'
 import * as accountController from '../account/account.controller'
 import {
-  schemaValidator, expiryValidator, secureHashValidator, asymmetricSignatureVerification
+  schemaValidator,
+  expiryValidator,
+  secureHashValidator,
+  asymmetricSignatureVerification
 } from '../../middlewares/requestValidators'
 import {
-  getUserInfoQuerySchema, increaseBalanceSchema
+  getUserInfoQuerySchema,
+  increaseBalanceSchema,
+  increaseBalanceParamsSchema
 } from '../../schemas/partnerRequest'
 
 const router = express.Router()
@@ -18,6 +23,7 @@ router.get('/user/:id',
 )
 
 router.patch('/account/:id',
+  schemaValidator(increaseBalanceParamsSchema, 'params'),
   schemaValidator(increaseBalanceSchema, 'body'),
   asymmetricSignatureVerification(),
   expiryValidator('body'),

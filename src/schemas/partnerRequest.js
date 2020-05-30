@@ -35,3 +35,11 @@ export const increaseBalanceSchema = partnerEssentialSchema.append({
     .min(0)
     .required()
 })
+
+export const increaseBalanceParamsSchema = Joi.object({
+  id: Joi
+    .string()
+    .alphanum() //can only validate if id is alpha numeric characters
+    .length(16)
+    .required()
+})

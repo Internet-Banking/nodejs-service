@@ -9,3 +9,6 @@ export const ACCOUNT_TYPES = keyMirror({
   PAYMENT: null,
   SAVING: null
 })
+
+export const BANK_CODE = '88'
+export const VN_DESIGNATION_CODE = '9704'
