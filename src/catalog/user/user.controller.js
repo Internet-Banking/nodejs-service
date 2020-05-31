@@ -1,14 +1,14 @@
 import * as userService from './user.service'
 import httpStatusCodes from 'http-status-codes'
 import moment from 'moment'
-import debug from '../../utils/debug'
-import { MESSAGE } from '../../constants'
+import {debug} from '../../utils'
+import {MESSAGE} from '../../constants'
 
 const NAMESPACE = `userController-${moment.utc().toISOString()}`
 
 export const findUserByIdForPartner = async (req, res, next) => {
   try {
-    const { id } = req.params
+    const {id} = req.params
 
     const userInstance = await userService.findUserById(id)
     delete userInstance.isDeleted

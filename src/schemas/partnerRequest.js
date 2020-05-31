@@ -1,5 +1,5 @@
 import Joi from '@hapi/joi'
-import { PARTNER_CODE_PGP, PARTNER_CODE_RSA } from '../config'
+import {PARTNER_CODE_PGP, PARTNER_CODE_RSA} from '../config'
 
 const partnerEssentialSchema = Joi.object({
   partnerCode: Joi

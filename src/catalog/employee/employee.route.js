@@ -1,12 +1,12 @@
 import express from 'express'
 import * as employeeController from './employee.controller'
-import { adminAuthentication } from '../../middlewares/authentication'
+import {auth} from '../../middlewares'
 
 const router = express.Router()
 
-router.get('/', adminAuthentication(), employeeController.findAllEmployees)
-router.post('/', adminAuthentication(), employeeController.createEmployee)
-router.put('/:id', adminAuthentication(), employeeController.updateEmployeeById)
-router.delete('/:id', adminAuthentication(), employeeController.deleteEmployeeById)
+router.get('/', auth.admin(), employeeController.findAllEmployees)
+router.post('/', auth.admin(), employeeController.createEmployee)
+router.put('/:id', auth.admin(), employeeController.updateEmployeeById)
+router.delete('/:id', auth.admin(), employeeController.deleteEmployeeById)
 
 export default router

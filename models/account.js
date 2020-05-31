@@ -1,6 +1,6 @@
 'use strict';
-import { sequelize, Sequelize } from '../src/db'
-import { ACCOUNT_TYPES } from '../src/constants/index'
+import {sequelize, Sequelize} from '../src/db'
+import {ACCOUNT_TYPES} from '../src/constants/index'
 
 const Accounts = sequelize.define('accounts', {
   id: {

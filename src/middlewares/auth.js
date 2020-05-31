@@ -1,14 +1,14 @@
 import httpStatusCodes from 'http-status-codes'
 import jwt from 'jsonwebtoken'
-import { JWT_SECRET } from '../config'
-import { findAdminById } from '../catalog/admin/admin.repository'
-import { MESSAGE } from '../constants'
-import debug from '../utils/debug'
+import {JWT_SECRET} from '../config'
+import {findAdminById} from '../catalog/admin/admin.repository'
+import {MESSAGE} from '../constants'
+import {debug} from '../utils'
 
-export const adminAuthentication = () => {
+const admin = () => {
   return async (req, res, next) => {
     try {
-      const { authorization } = req.headers
+      const {authorization} = req.headers
 
       if (!authorization) {
         return res.status(httpStatusCodes.UNAUTHORIZED).json({
@@ -38,4 +38,8 @@ export const adminAuthentication = () => {
       })
     }
   }
+}
+
+export default {
+  admin
 }

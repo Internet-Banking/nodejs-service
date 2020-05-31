@@ -27,6 +27,7 @@ rules:
   computed-property-spacing: [2, "never"]
   no-trailing-spaces: [2, {"skipBlankLines": true}]
   generator-star-spacing: [2, {"before": false, "after": true}]
+  object-curly-spacing: [2, "never"]
 
   # Babel
   # babel/new-cap: 2

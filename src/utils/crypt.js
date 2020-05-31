@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt-nodejs'
-import { SALT_ROUNDS, JWT_SECRET, TOKEN_EXPIRED_TIME } from '../config'
+import {SALT_ROUNDS, JWT_SECRET, TOKEN_EXPIRED_TIME} from '../config'
 import jwt from 'jsonwebtoken'
 
 const hashPassword = (password) => {
@@ -11,7 +11,7 @@ const comparePassword = (password, hash) => {
 }
 
 const createAdminAuthToken = (adminId) => {
-  return jwt.sign({ adminId }, JWT_SECRET, { expiresIn: TOKEN_EXPIRED_TIME })
+  return jwt.sign({adminId}, JWT_SECRET, {expiresIn: TOKEN_EXPIRED_TIME})
 }
 
-export default { hashPassword, comparePassword, createAdminAuthToken }
+export default {hashPassword, comparePassword, createAdminAuthToken}

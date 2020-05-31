@@ -4,38 +4,38 @@ import NodeRSA from 'node-rsa'
 import moment from 'moment'
 import {
   HASH_SECRET, PARTNER_REQUEST_EXPIRED_TIME,
-  RSA_PARTNER_PUBLIC_KEY, PGP_PARTNER_PUBLIC_KEY, PARTNER_CODE_RSA
+  RSA_PUBLIC_KEY, PGP_PARTNER_PUBLIC_KEY, PARTNER_CODE_RSA
 } from '../config'
 //dev team replace RSA_PARTNER_PUBLIC_KEY with RSA_PUBLIC_KEY when testing with partnerInstruction.js
 
 //validate property of req by schema
-export const schemaValidator = (schema, property) => {
+const schemaValidator = (schema, property) => {
   //property: body, params, query,...
   return async (req, res, next) => {
-    const { error } = await schema.validate(req[property])
+    const {error} = await schema.validate(req[property])
 
     if (!error) {
       next()
     }
     else {
-      const { details } = error
+      const {details} = error
       const errMessage = details.map(detail => detail.message).join(',')
-      res.status(httpStatusCodes.BAD_REQUEST).json({ message: errMessage })
+      res.status(httpStatusCodes.BAD_REQUEST).json({message: errMessage})
     }
   }
 }
 
 //check if req is expired with createdAt field in req[property]
-export const expiryValidator = (property) => {
+const expiryValidator = (property) => {
   return async (req, res, next) => {
-    const { createdAt } = req[property]
+    const {createdAt} = req[property]
     const now = moment.utc()
     const reqCreatedAt = moment.utc(createdAt)
 
     const elapsedTimeInMilliseconds = now.diff(reqCreatedAt)
 
     if (elapsedTimeInMilliseconds > PARTNER_REQUEST_EXPIRED_TIME) {
-      res.status(httpStatusCodes.BAD_REQUEST).json({ message: 'Request is expired.' })
+      res.status(httpStatusCodes.BAD_REQUEST).json({message: 'Request is expired.'})
     }
     else {
       next()
@@ -44,7 +44,7 @@ export const expiryValidator = (property) => {
 }
 
 //validate if other keys was modified or not
-export const secureHashValidator = (property) => {
+const secureHashValidator = (property) => {
   return async (req, res, next) => {
     const propertyObject = req[property]
     const queryHash = propertyObject.secureHash
@@ -57,19 +57,19 @@ export const secureHashValidator = (property) => {
       next()
     }
     else {
-      res.status(httpStatusCodes.BAD_REQUEST).json({ message: 'This request is not secured.' })
+      res.status(httpStatusCodes.BAD_REQUEST).json({message: 'This request is not secured.'})
     }
   }
 }
 
-export const asymmetricSignatureVerification = () => {
+const asymmetricSignatureVerification = () => {
   return async (req, res, next) => {
-    const { signature, partnerCode } = req.body
+    const {signature, partnerCode} = req.body
     delete req.body.signature
 
     const partnerPublicKey =
       partnerCode === PARTNER_CODE_RSA
-        ? new NodeRSA(RSA_PARTNER_PUBLIC_KEY)
+        ? new NodeRSA(RSA_PUBLIC_KEY)
         : new NodeRSA(PGP_PARTNER_PUBLIC_KEY)
 
     const isVerified = partnerPublicKey.verify(req.body, signature, 'base64', 'base64')
@@ -78,7 +78,14 @@ export const asymmetricSignatureVerification = () => {
       next()
     }
     else {
-      res.status(httpStatusCodes.UNAUTHORIZED).json({ message: 'Invalid signature' })
+      res.status(httpStatusCodes.UNAUTHORIZED).json({message: 'Invalid signature'})
     }
   }
+}
+
+export default {
+  schemaValidator,
+  expiryValidator,
+  secureHashValidator,
+  asymmetricSignatureVerification
 }

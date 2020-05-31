@@ -11,7 +11,7 @@ import adminRoute from './catalog/admin/admin.route'
 import employeeRoute from './catalog/employee/employee.route'
 
 const app = express()
-app.use(morgan('[:date[clf]] :method :url :status :response-time ms - :res[content-length]'))
+app.use(morgan('dev'))
 
 app.use(bodyParser.urlencoded({
   extended: true

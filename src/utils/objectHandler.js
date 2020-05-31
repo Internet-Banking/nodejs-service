@@ -1,4 +1,4 @@
-export const sortObject = (o) => { //copy from VNPay document
+const sortObject = (o) => { //copy from VNPay document
   const sorted = {}
   let key = []
   const a = []
@@ -17,3 +17,5 @@ export const sortObject = (o) => { //copy from VNPay document
   }
   return sorted;
 }
+
+export default sortObject

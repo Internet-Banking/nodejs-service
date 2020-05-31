@@ -13,10 +13,11 @@ const PARTNER_CODE_RSA = process.env.PARTNER_CODE_RSA
 const privateKey = new NodeRSA(RSA_PRIVATE_KEY)
 
 const serverUrl = 'https://internet-banking-29-service.herokuapp.com'
-const id = '9704880715158812' //id of user or account
+const userId = 1 //id of user or account
+const accountId = '9704889486932380'
 
 //query user's information
-/*const query = {
+const query = {
   partnerCode: PARTNER_CODE_RSA,
   createdAt: moment.utc().toISOString()
 }
@@ -25,17 +26,17 @@ const stringifyQuery = JSON.stringify(query)
 
 const secureHash = crypto.createHmac('sha256', HASH_SECRET).update(stringifyQuery).digest('hex')
 
-console.log({ query, stringifyQuery, secureHash })
+console.log({query, stringifyQuery, secureHash})
 
 axios.get(`
-${serverUrl}/partner/user/${id}?partnerCode=${query.partnerCode}&createdAt=${query.createdAt}&secureHash=${secureHash}`).then((response) => {
+${serverUrl}/partner/user/${userId}?partnerCode=${query.partnerCode}&createdAt=${query.createdAt}&secureHash=${secureHash}`).then((response) => {
   console.log(response.data)
 }).catch((err) => {
   console.log(err.response.data.message)
-})*/
+})
 
 //increase account's balance
-/*const bodyWithoutSecureHash = {
+const bodyWithoutSecureHash = {
   amount: 10000,
   partnerCode: PARTNER_CODE_RSA,
   createdAt: moment.utc().toISOString()
@@ -53,14 +54,14 @@ const requestBody = {
   signature: privateKey.sign(bodyWithoutSignature, 'base64')
 }
 
-console.log({ bodyWithoutSecureHash, stringifyBody, bodyWithoutSignature, requestBody })
+console.log({bodyWithoutSecureHash, stringifyBody, bodyWithoutSignature, requestBody})
 
 axios({
   method: 'patch',
-  url: `${serverUrl}/partner/account/${id}`,
+  url: `${serverUrl}/partner/account/${accountId}`,
   data: requestBody
 }).then((response) => {
   console.log(response.data)
 }).catch((err) => {
   console.log(err.response.data.message)
-})*/
+})

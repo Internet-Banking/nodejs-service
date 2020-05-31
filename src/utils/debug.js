@@ -27,4 +27,4 @@ const error = (message, ...opt) => {
   }
 }
 
-export default { log, error }
+export default {log, error}

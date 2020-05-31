@@ -1,15 +1,14 @@
 import * as adminService from './admin.service'
 import httpStatusCodes from 'http-status-codes'
 import moment from 'moment'
-import debug from '../../utils/debug'
-import { MESSAGE } from '../../constants'
-import crypt from '../../utils/crypt'
+import {debug, crypt} from '../../utils'
+import {MESSAGE} from '../../constants'
 
 const NAMESPACE = `adminController-${moment.utc().toISOString()}`
 
 export const loginAdmin = async (req, res, next) => {
   try {
-    const { email, password } = req.body
+    const {email, password} = req.body
 
     const adminInstance = await adminService.authenticateAdmin(email, password)
 

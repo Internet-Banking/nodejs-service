@@ -1,17 +1,19 @@
 import express from 'express'
 import * as userController from '../user/user.controller'
 import * as accountController from '../account/account.controller'
-import {
-  schemaValidator,
-  expiryValidator,
-  secureHashValidator,
-  asymmetricSignatureVerification
-} from '../../middlewares/requestValidators'
+import {requestValidation} from '../../middlewares'
 import {
   getUserInfoQuerySchema,
   increaseBalanceSchema,
   increaseBalanceParamsSchema
 } from '../../schemas/partnerRequest'
+
+const {
+  schemaValidator,
+  expiryValidator,
+  secureHashValidator,
+  asymmetricSignatureVerification
+} = requestValidation
 
 const router = express.Router()
 

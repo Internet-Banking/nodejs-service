@@ -1,14 +1,14 @@
 import * as accountService from './account.service'
 import httpStatusCodes from 'http-status-codes'
 import moment from 'moment'
-import debug from '../../utils/debug'
-import { MESSAGE } from '../../constants'
+import {debug} from '../../utils'
+import {MESSAGE} from '../../constants'
 
 const NAMESPACE = `accountController-${moment.utc().toISOString()}`
 
 export const increaseBalanceById = async (req, res, next) => {
   try {
-    const { id } = req.params
+    const {id} = req.params
     const accountInstance = await accountService.findAccountById(id)
     if (!accountInstance) {
       return res.status(httpStatusCodes.BAD_REQUEST).json({
@@ -16,7 +16,7 @@ export const increaseBalanceById = async (req, res, next) => {
       })
     }
 
-    const { amount } = req.body
+    const {amount} = req.body
 
     const result = await accountService.increaseBalanceById(id, amount)
     delete result.isDeleted

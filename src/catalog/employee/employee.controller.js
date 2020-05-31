@@ -1,8 +1,8 @@
 import * as employeeService from './employee.service'
 import httpStatusCodes from 'http-status-codes'
 import moment from 'moment'
-import debug from '../../utils/debug'
-import { MESSAGE } from '../../constants'
+import {debug} from '../../utils'
+import {MESSAGE} from '../../constants'
 
 const NAMESPACE = `employeeController-${moment.utc().toISOString()}`
 
@@ -25,7 +25,7 @@ export const findAllEmployees = async (req, res, next) => {
 
 export const createEmployee = async (req, res, next) => {
   try {
-    const { email, name, password } = req.body
+    const {email, name, password} = req.body
 
     const employeeInstance = await employeeService.findEmployeeByEmail(email)
     if (employeeInstance) {
@@ -51,8 +51,8 @@ export const createEmployee = async (req, res, next) => {
 
 export const updateEmployeeById = async (req, res, next) => {
   try {
-    const { id } = req.params
-    const { name } = req.body
+    const {id} = req.params
+    const {name} = req.body
 
     const employeeInstance = await employeeService.findEmployeeById(id)
     if (employeeInstance) {
@@ -78,7 +78,7 @@ export const updateEmployeeById = async (req, res, next) => {
 
 export const deleteEmployeeById = async (req, res, next) => {
   try {
-    const { id } = req.params
+    const {id} = req.params
 
     const employeeInstance = await employeeService.findEmployeeById(id)
     if (!employeeInstance) {
