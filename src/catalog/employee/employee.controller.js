@@ -1,7 +1,7 @@
 import * as employeeService from './employee.service'
 import httpStatusCodes from 'http-status-codes'
 import moment from 'moment'
-import {debug} from '../../utils'
+import {debug, crypt} from '../../utils'
 import {MESSAGE} from '../../constants'
 
 const NAMESPACE = `employeeController-${moment.utc().toISOString()}`
@@ -96,6 +96,34 @@ export const deleteEmployeeById = async (req, res, next) => {
   }
   catch (err) {
     debug.error(NAMESPACE, 'Error occured while updating employee', err)
+    return res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json({
+      message: MESSAGE.INTERNAL_SERVER_ERROR
+    })
+  }
+}
+
+export const loginEmployee = async (req, res, next) => {
+  try {
+    const {email, password} = req.body
+
+    const employeeInstance = await employeeService.authenticateEmployee(email, password)
+
+    if (!employeeInstance) {
+      return res.status(httpStatusCodes.BAD_REQUEST).json({
+        message: 'Sai email hoặc mật khẩu'
+      })
+    }
+
+    const token = crypt.createEmployeeAuthToken(employeeInstance.id)
+
+    return res.status(httpStatusCodes.OK).json({
+      message: MESSAGE.OK,
+      payload: employeeInstance,
+      token
+    })
+  }
+  catch (err) {
+    debug.error(NAMESPACE, 'Error occured while logging employee in', err)
     return res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json({
       message: MESSAGE.INTERNAL_SERVER_ERROR
     })

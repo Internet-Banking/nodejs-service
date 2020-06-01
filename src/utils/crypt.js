@@ -14,4 +14,13 @@ const createAdminAuthToken = (adminId) => {
   return jwt.sign({adminId}, JWT_SECRET, {expiresIn: TOKEN_EXPIRED_TIME})
 }
 
-export default {hashPassword, comparePassword, createAdminAuthToken}
+const createEmployeeAuthToken = (empId) => {
+  return jwt.sign({empId}, JWT_SECRET, {expiresIn: TOKEN_EXPIRED_TIME})
+}
+
+export default {
+  hashPassword,
+  comparePassword,
+  createAdminAuthToken,
+  createEmployeeAuthToken
+}
