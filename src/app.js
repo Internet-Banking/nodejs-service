@@ -9,6 +9,7 @@ import swaggerUi from 'swagger-ui-express'
 import partnerRoute from './catalog/partner/partner.route'
 import adminRoute from './catalog/admin/admin.route'
 import employeeRoute from './catalog/employee/employee.route'
+import userRoute from './catalog/user/user.route'
 
 const app = express()
 app.use(morgan('dev'))
@@ -29,6 +30,7 @@ app.use('/documentation', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 app.use('/partner', partnerRoute)
 app.use('/admin', adminRoute)
 app.use('/employee', employeeRoute)
+app.use('/user', userRoute)
 
 //handling 'Not found' error
 //if the url does not match any above route => not found error

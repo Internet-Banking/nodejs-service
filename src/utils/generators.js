@@ -9,4 +9,4 @@ const generateAccountID = () => {
  */
 }
 
-export default generateAccountID
+export default {generateAccountID}

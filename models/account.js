@@ -22,7 +22,7 @@ const Accounts = sequelize.define('accounts', {
   },
   type: {
     type: Sequelize.ENUM([ACCOUNT_TYPES.SAVING, ACCOUNT_TYPES.PAYMENT]),
-    defaultValue: ACCOUNT_TYPES.SAVING,
+    defaultValue: ACCOUNT_TYPES.PAYMENT,
     allowNull: false
   },
   isDeleted: {

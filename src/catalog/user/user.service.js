@@ -1,5 +1,28 @@
 import * as userRepo from './user.repository'
+import * as accountRepo from '../account/account.repository'
 
 export const findUserById = async (userId) => {
   return await userRepo.findUserById(userId)
+}
+
+export const findUserByEmail = async (email) => {
+  return await userRepo.findUserByEmail(email)
+}
+
+export const findUserByUsername = async (username) => {
+  return await userRepo.findUserByUsername(username)
+}
+
+export const findUserByPhone = async (phone) => {
+  return await userRepo.findUserByPhone(phone)
+}
+
+export const createUser = async (email, name, username, phone, password) => {
+  const userInstance = await userRepo.createUser(email, name, username, phone, password)
+  delete userInstance.dataValues.password
+  delete userInstance.dataValues.isDeleted
+  delete userInstance.dataValues.createdAt
+  delete userInstance.dataValues.updatedAt
+  await accountRepo.createPaymentAccountByUserId(userInstance.id)
+  return userInstance
 }

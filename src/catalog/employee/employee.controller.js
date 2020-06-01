@@ -30,7 +30,7 @@ export const createEmployee = async (req, res, next) => {
     const employeeInstance = await employeeService.findEmployeeByEmail(email)
     if (employeeInstance) {
       return res.status(httpStatusCodes.BAD_REQUEST).json({
-        message: 'Email này đã được sử dụng.'
+        message: 'This email was used.'
       })
     }
 
@@ -57,7 +57,7 @@ export const updateEmployeeById = async (req, res, next) => {
     const employeeInstance = await employeeService.findEmployeeById(id)
     if (employeeInstance) {
       return res.status(httpStatusCodes.BAD_REQUEST).json({
-        message: 'Giao dịch viên không tồn tại.'
+        message: 'This employee does not exist.'
       })
     }
 
@@ -110,7 +110,7 @@ export const loginEmployee = async (req, res, next) => {
 
     if (!employeeInstance) {
       return res.status(httpStatusCodes.BAD_REQUEST).json({
-        message: 'Sai email hoặc mật khẩu'
+        message: 'Invalid email or password'
       })
     }
 
