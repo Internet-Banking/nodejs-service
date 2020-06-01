@@ -1,13 +1,10 @@
 'use strict';
-const generateAccountID = () => {
-  return '9704' + '88' + Math.random().toString().slice(2, 12)
-}
-//cannot import from utils because of "Cannot use import statement outside a module" error
+const {accountIdSeeds} = require('../idSeeds')
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('accounts', [{
-      id: generateAccountID(),
+      id: accountIdSeeds[0],
       userId: 1,
       balance: 0,
       type: 'PAYMENT',
@@ -15,7 +12,7 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
-      id: generateAccountID(),
+      id: accountIdSeeds[1],
       userId: 1,
       balance: 0,
       type: 'SAVING',
@@ -23,7 +20,7 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
-      id: generateAccountID(),
+      id: accountIdSeeds[2],
       userId: 2,
       balance: 0,
       type: 'PAYMENT',
@@ -31,7 +28,7 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
-      id: generateAccountID(),
+      id: accountIdSeeds[3],
       userId: 3,
       balance: 0,
       type: 'PAYMENT',
@@ -39,7 +36,7 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
-      id: generateAccountID(),
+      id: accountIdSeeds[4],
       userId: 4,
       balance: 0,
       type: 'PAYMENT',
@@ -47,7 +44,7 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
-      id: generateAccountID(),
+      id: accountIdSeeds[5],
       userId: 5,
       balance: 0,
       type: 'PAYMENT',
@@ -55,7 +52,7 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
-      id: generateAccountID(),
+      id: accountIdSeeds[6],
       userId: 6,
       balance: 0,
       type: 'PAYMENT',
@@ -63,7 +60,7 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
-      id: generateAccountID(),
+      id: accountIdSeeds[7],
       userId: 7,
       balance: 0,
       type: 'PAYMENT',
@@ -71,7 +68,7 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
-      id: generateAccountID(),
+      id: accountIdSeeds[8],
       userId: 8,
       balance: 0,
       type: 'PAYMENT',

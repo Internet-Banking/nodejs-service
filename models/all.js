@@ -1,7 +1,7 @@
 import Users from './user'
 import Accounts from './account'
-import Admins from './admins'
-import Employees from './employees'
+import Admins from './admin'
+import Employees from './employee'
 
 Accounts.belongsTo(Users, {foreignKey: 'userId'})
 
