@@ -1,7 +1,7 @@
 'use strict';
 import {sequelize, Sequelize} from '../src/db'
 
-const Accounts = sequelize.define('charges', {
+const Accounts = sequelize.define('account_charges', {
   id: {
     allowNull: false,
     autoIncrement: true,
