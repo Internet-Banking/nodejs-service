@@ -3,7 +3,7 @@ const {accountIdSeeds} = require('../idSeeds')
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert('charges', [{
+    return queryInterface.bulkInsert('charge_accounts', [{
       accountId: accountIdSeeds[0],
       amount: 10000,
       createdAt: new Date(),
@@ -44,6 +44,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete('charges', null, {});
+    return queryInterface.bulkDelete('charge_accounts', null, {});
   }
 };
