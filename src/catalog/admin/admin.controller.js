@@ -14,7 +14,7 @@ export const loginAdmin = async (req, res, next) => {
 
     if (!adminInstance) {
       return res.status(httpStatusCodes.BAD_REQUEST).json({
-        message: 'Invalid email or phone'
+        message: 'Invalid email or password'
       })
     }
 
