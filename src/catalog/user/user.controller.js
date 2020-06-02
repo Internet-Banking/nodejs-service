@@ -1,7 +1,7 @@
 import * as userService from './user.service'
 import httpStatusCodes from 'http-status-codes'
 import moment from 'moment'
-import {debug} from '../../utils'
+import {debug, crypt} from '../../utils'
 import {MESSAGE} from '../../constants'
 
 const NAMESPACE = `userController-${moment.utc().toISOString()}`
@@ -62,6 +62,34 @@ export const createUser = async (req, res, next) => {
   }
   catch (err) {
     debug.error(NAMESPACE, 'Error occured while creating user', err)
+    return res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json({
+      message: MESSAGE.INTERNAL_SERVER_ERROR
+    })
+  }
+}
+
+export const login = async (req, res, next) => {
+  try {
+    const {username, password} = req.body
+
+    const userInstance = await userService.authenticateUser(username, password)
+
+    if (!userInstance) {
+      return res.status(httpStatusCodes.BAD_REQUEST).json({
+        message: 'Invalid username or password'
+      })
+    }
+
+    const token = crypt.createUserAuthToken(userInstance.id)
+
+    return res.status(httpStatusCodes.OK).json({
+      message: MESSAGE.OK,
+      payload: userInstance,
+      token
+    })
+  }
+  catch (err) {
+    debug.error(NAMESPACE, 'Error occured while logging user in', err)
     return res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json({
       message: MESSAGE.INTERNAL_SERVER_ERROR
     })
