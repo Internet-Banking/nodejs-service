@@ -9,6 +9,22 @@ export const findAllAccountsOfUser = async (userId, attributes = [], raw = true)
   return await Models.Accounts.findAll({where: {userId}, attributes, raw})
 }
 
+export const findAccountWithUserInfoByAccountId = async (accountId, raw = true) => {
+  return await Models.Accounts.findOne({
+    where: {
+      id: accountId,
+      isDeleted: false
+    },
+    include: [
+      {
+        model: Models.Users,
+        required: true
+      }
+    ],
+    raw
+  })
+}
+
 export const increaseBalanceById = async (accountId, amount) => {
   return await Models.Accounts.increment(['balance'],
     {by: amount, where: {id: accountId, isDeleted: false}})

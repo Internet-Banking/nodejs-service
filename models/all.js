@@ -5,6 +5,7 @@ import Employees from './employee'
 import AccountCharges from './account_charge'
 import RecipientAccounts from './recipient_account'
 
+Users.hasMany(Accounts, {foreignKey: 'userId'})
 Accounts.belongsTo(Users, {foreignKey: 'userId'})
 AccountCharges.belongsTo(Accounts, {foreignKey: 'accountId'})
 RecipientAccounts.belongsTo(Users, {foreignKey: 'userId'})
