@@ -5,6 +5,10 @@ export const findAccountById = async (accountId) => {
   return await accountRepo.findAccountById(accountId)
 }
 
+export const findAllAccountsOfUser = async (userId) => {
+  return await accountRepo.findAllAccountsOfUser(userId, ['id', 'balance', 'type'])
+}
+
 export const increaseBalanceById = async (accountId, amount) => {
   const result = await accountRepo.increaseBalanceById(accountId, amount)
   return result[0][0][0]
