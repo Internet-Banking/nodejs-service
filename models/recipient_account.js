@@ -28,6 +28,10 @@ const RecipientAccounts = sequelize.define('recipient_accounts', {
     type: Sequelize.STRING,
     allowNull: false
   },
+  isDeleted: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  },
   createdAt: {
     allowNull: false,
     type: Sequelize.DATE
