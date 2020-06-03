@@ -11,7 +11,6 @@ import adminRoute from './catalog/admin/admin.route'
 import employeeRoute from './catalog/employee/employee.route'
 import userRoute from './catalog/user/user.route'
 import accountRoute from './catalog/account/account.route'
-import recipientAccountRoute from './catalog/recipient_account/recipient_account.route'
 
 const app = express()
 app.use(morgan('dev'))
@@ -34,7 +33,6 @@ app.use('/admin', adminRoute)
 app.use('/employee', employeeRoute)
 app.use('/user', userRoute)
 app.use('/account', accountRoute)
-app.use('/recipient_account', recipientAccountRoute)
 
 //handling 'Not found' error
 //if the url does not match any above route => not found error
