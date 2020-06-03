@@ -8,7 +8,10 @@ const router = express.Router()
 router.post('/', auth.employee(), userController.createUser)
 router.post('/login', userController.login)
 router.get('/account', auth.user(), userController.findAllAccountsOfUser)
+
 router.get('/recipient_account', auth.user(), recipientAccountController.findAllRecipientAccountsOfUser)
 router.post('/recipient_account', auth.user(), recipientAccountController.createRecipientAccount)
+router.put('/recipient_account/:id', auth.user(), recipientAccountController.updateRecipientAccountById)
+router.delete('/recipient_account/:id', auth.user(), recipientAccountController.deleteRecipientAccountById)
 
 export default router
