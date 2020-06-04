@@ -1,16 +1,13 @@
-const generateAccountID = () => {
-  return '9704' + '88' + Math.random().toString().slice(2, 12)
-}
-//cannot import from utils because of "Cannot use import statement outside a module" error
-
-const accountIdSeeds = []
-
-const init = () => {
-  for (let i = 0; i < 9; i++) {
-    accountIdSeeds.push(generateAccountID())
-  }
-}
-
-init()
+const accountIdSeeds = [
+  '9704880845960482',
+  '9704881403126955',
+  '9704881523151799',
+  '9704882080020950',
+  '9704882136160309',
+  '9704883027097712',
+  '9704885524461138',
+  '9704888967748613',
+  '9704889576815390'
+]
 
 module.exports = {accountIdSeeds}

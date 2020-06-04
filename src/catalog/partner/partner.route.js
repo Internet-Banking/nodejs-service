@@ -3,7 +3,7 @@ import * as userController from '../user/user.controller'
 import * as accountController from '../account/account.controller'
 import {requestValidation} from '../../middlewares'
 import {
-  getUserInfoQuerySchema,
+  getUserInfoByAccountIdQuerySchema,
   increaseBalanceSchema,
   increaseBalanceParamsSchema
 } from '../../schemas/partnerRequest'
@@ -17,11 +17,11 @@ const {
 
 const router = express.Router()
 
-router.get('/user/:id',
-  schemaValidator(getUserInfoQuerySchema, 'query'),
+router.get('/user/account/:id',
+  schemaValidator(getUserInfoByAccountIdQuerySchema, 'query'),
   expiryValidator('query'),
   secureHashValidator('query'),
-  userController.findUserByIdForPartner
+  userController.findUserInfoByAccountIdForPartner
 )
 
 router.patch('/account/:id',

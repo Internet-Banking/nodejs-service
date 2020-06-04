@@ -1,4 +1,5 @@
 import Models from '../../../models/all'
+import Sequelize from 'sequelize'
 
 export const findUserById = async (userId, raw = true) => {
   return await Models.Users.findOne({
@@ -39,6 +40,29 @@ export const findUserByPhone = async (phone, raw = true) => {
       phone,
       isDeleted: false
     },
+    raw
+  })
+}
+
+export const findUserInfoByAccountIdForPartner = async (accountId, raw = true) => {
+  return await Models.Accounts.findOne({
+    attributes: [
+      'id',
+      [Sequelize.col('user.name'), 'userName'],
+      [Sequelize.col('user.email'), 'userEmail'],
+      [Sequelize.col('user.phone'), 'userPhone']
+    ],
+    where: {
+      id: accountId,
+      isDeleted: false
+    },
+    include: [
+      {
+        model: Models.Users,
+        required: true,
+        attributes: ['name', 'email', 'phone']
+      }
+    ],
     raw
   })
 }

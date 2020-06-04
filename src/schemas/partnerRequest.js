@@ -23,7 +23,7 @@ const partnerEssentialSchema = Joi.object({
     hashed with crypto.createHmac("sha256", HASH_SECRET).update(<stringifyObject>).digest("hex")`)
 })
 
-export const getUserInfoQuerySchema = partnerEssentialSchema
+export const getUserInfoByAccountIdQuerySchema = partnerEssentialSchema
 
 export const increaseBalanceSchema = partnerEssentialSchema.append({
   amount: Joi
