@@ -12,6 +12,8 @@ import employeeRoute from './catalog/employee/employee.route'
 import userRoute from './catalog/user/user.route'
 import accountRoute from './catalog/account/account.route'
 
+import {ADMIN_FRONTEND_URL, CUSTOMER_FRONTEND_URL, EMPLOYEE_FRONTEND_URL} from './config'
+
 const app = express()
 app.use(morgan('dev'))
 
@@ -22,7 +24,11 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json())
 //Prevent all domain from sending request except this one
 app.use(cors({
-  origin: [], //add partner team's domains here
+  origin: [
+    ADMIN_FRONTEND_URL,
+    CUSTOMER_FRONTEND_URL,
+    EMPLOYEE_FRONTEND_URL
+  ], //add partner team's domains here
   credentials: true //Turn on cookie HTTP through CORS
 }))
 

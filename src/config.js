@@ -9,6 +9,10 @@ export const DB_USERNAME = process.env.DB_USERNAME || ''
 export const DB_PASSWORD = process.env.DB_PASSWORD || ''
 export const DB_NAME = process.env.DB_NAME || 'internetBanking'
 
+export const CUSTOMER_FRONTEND_URL = process.env.CUSTOMER_FRONTEND_URL || 'http://localhost:3001'
+export const EMPLOYEE_FRONTEND_URL = process.env.EMPLOYEE_FRONTEND_URL || 'http://localhost:3002'
+export const ADMIN_FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:3003'
+
 export const SALT_ROUNDS = process.env.SALT_ROUNDS
 export const JWT_SECRET = process.env.JWT_SECRET
 export const TOKEN_EXPIRED_TIME = process.env.TOKEN_EXPIRED_TIME
