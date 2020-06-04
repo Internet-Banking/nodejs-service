@@ -12,7 +12,7 @@ const PARTNER_CODE_RSA = process.env.PARTNER_CODE_RSA
 
 const privateKey = new NodeRSA(RSA_PRIVATE_KEY)
 
-const serverUrl = 'https://internet-banking-29-service.herokuapp.com'
+const serverUrl = 'http://localhost:3000'
 const accountId = '9704880845960482'
 
 //query user's information
@@ -28,7 +28,7 @@ const secureHash = crypto.createHmac('sha256', HASH_SECRET).update(stringifyQuer
 console.log({query, stringifyQuery, secureHash})
 
 axios.get(`
-${serverUrl}/partner/account/user/${accountId}?partnerCode=${query.partnerCode}&createdAt=${query.createdAt}&secureHash=${secureHash}`).then((response) => {
+${serverUrl}/partner/user/account/${accountId}?partnerCode=${query.partnerCode}&createdAt=${query.createdAt}&secureHash=${secureHash}`).then((response) => {
   console.log(response.data)
 }).catch((err) => {
   console.log(err.response.data.message)
