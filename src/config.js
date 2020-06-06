@@ -13,6 +13,9 @@ export const SALT_ROUNDS = process.env.SALT_ROUNDS
 export const JWT_SECRET = process.env.JWT_SECRET
 export const TOKEN_EXPIRED_TIME = process.env.TOKEN_EXPIRED_TIME
 
+//used to send mail from @sendgrid/mail
+export const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY
+
 //used to sign in request sent to partner
 export const RSA_PRIVATE_KEY = process.env.RSA_PRIVATE_KEY.replace(/\\n/g, '\n')
 export const PGP_PRIVATE_KEY = process.env.PGP_PRIVATE_KEY.replace(/\\n/g, '\n')
