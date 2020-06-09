@@ -55,7 +55,7 @@ export const updateEmployeeById = async (req, res, next) => {
     const {name} = req.body
 
     const employeeInstance = await employeeService.findEmployeeById(id)
-    if (employeeInstance) {
+    if (!employeeInstance) {
       return res.status(httpStatusCodes.BAD_REQUEST).json({
         message: 'This employee does not exist.'
       })
