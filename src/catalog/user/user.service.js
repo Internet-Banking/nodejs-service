@@ -23,7 +23,8 @@ export const createUser = async (email, name, username, phone, password) => {
   delete userInstance.dataValues.isDeleted
   delete userInstance.dataValues.createdAt
   delete userInstance.dataValues.updatedAt
-  await accountRepo.createPaymentAccountByUserId(userInstance.id)
+  const accountInstance = await accountRepo.createPaymentAccountByUserId(userInstance.id)
+  userInstance.dataValues.paymentAccount = accountInstance.dataValues
   return userInstance
 }
 
