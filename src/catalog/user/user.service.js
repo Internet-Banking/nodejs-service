@@ -1,6 +1,10 @@
 import * as userRepo from './user.repository'
 import * as accountRepo from '../account/account.repository'
 
+export const findAllUsers = async () => {
+  return await userRepo.findAllUsers()
+}
+
 export const findUserById = async (userId) => {
   return await userRepo.findUserById(userId)
 }

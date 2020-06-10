@@ -1,6 +1,10 @@
 import Models from '../../../models/all'
 import Sequelize from 'sequelize'
 
+export const findAllUsers = async (raw = true) => {
+  return await Models.Users.findAll({where: {isDeleted: false}, raw})
+}
+
 export const findUserById = async (userId, raw = true) => {
   return await Models.Users.findOne({
     where: {

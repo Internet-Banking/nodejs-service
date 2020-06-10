@@ -7,6 +7,23 @@ import {MESSAGE} from '../../constants'
 
 const NAMESPACE = `userController-${moment.utc().toISOString()}`
 
+export const findAllUsers = async (req, res, next) => {
+  try {
+    const userList = await userService.findAllUsers()
+
+    return res.status(httpStatusCodes.OK).json({
+      message: MESSAGE.OK,
+      payload: userList
+    })
+  }
+  catch (err) {
+    debug.error(NAMESPACE, 'Error occured while finding all users', err)
+    return res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json({
+      message: MESSAGE.INTERNAL_SERVER_ERROR
+    })
+  }
+}
+
 export const findUserInfoByAccountIdForPartner = async (req, res, next) => {
   try {
     const {id} = req.params
@@ -114,6 +131,25 @@ export const findAllAccountsOfUser = async (req, res, next) => {
   }
   catch (err) {
     debug.error(NAMESPACE, 'Error occured while finding all accounts of user', err)
+    return res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json({
+      message: MESSAGE.INTERNAL_SERVER_ERROR
+    })
+  }
+}
+
+export const findAllAccountsOfUserById = async (req, res, next) => {
+  try {
+    const {id} = req.params
+
+    const accountList = await accountService.findAllAccountsOfUser(id)
+
+    return res.status(httpStatusCodes.OK).json({
+      message: MESSAGE.OK,
+      payload: accountList
+    })
+  }
+  catch (err) {
+    debug.error(NAMESPACE, 'Error occured while finding all accounts of user by id', err)
     return res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json({
       message: MESSAGE.INTERNAL_SERVER_ERROR
     })
