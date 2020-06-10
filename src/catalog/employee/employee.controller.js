@@ -129,3 +129,32 @@ export const loginEmployee = async (req, res, next) => {
     })
   }
 }
+
+export const getEmployeeBasicInfo = async (req, res, next) => {
+  try {
+    const {id} = req.employee
+
+    const empInstance = await employeeService.findEmployeeById(id)
+    if (!empInstance) {
+      return res.status(httpStatusCodes.BAD_REQUEST).json({
+        message: `Employee with id ${id} does not exist.`
+      })
+    }
+
+    delete empInstance.password
+    delete empInstance.isDeleted
+    delete empInstance.createdAt
+    delete empInstance.updatedAt
+
+    return res.status(httpStatusCodes.OK).json({
+      message: MESSAGE.OK,
+      payload: empInstance
+    })
+  }
+  catch (err) {
+    debug.error(NAMESPACE, 'Error occured while getting employee basic info', err)
+    return res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json({
+      message: MESSAGE.INTERNAL_SERVER_ERROR
+    })
+  }
+}

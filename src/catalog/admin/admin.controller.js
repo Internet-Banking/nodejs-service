@@ -55,7 +55,7 @@ export const getAdminBasicInfo = async (req, res, next) => {
     })
   }
   catch (err) {
-    debug.error(NAMESPACE, 'Error occured while logging admin in', err)
+    debug.error(NAMESPACE, 'Error occured while getting admin basic info', err)
     return res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json({
       message: MESSAGE.INTERNAL_SERVER_ERROR
     })
