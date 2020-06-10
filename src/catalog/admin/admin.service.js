@@ -12,3 +12,7 @@ export const authenticateAdmin = async (email, password) => {
 
   return null
 }
+
+export const findAdminById = async (adminId) => {
+  return await adminRepo.findAdminById(adminId)
+}

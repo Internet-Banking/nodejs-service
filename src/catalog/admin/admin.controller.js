@@ -33,3 +33,31 @@ export const loginAdmin = async (req, res, next) => {
     })
   }
 }
+
+export const getAdminBasicInfo = async (req, res, next) => {
+  try {
+    const {id} = req.admin
+
+    const adminInstance = await adminService.findAdminById(id)
+    if (!adminInstance) {
+      return res.status(httpStatusCodes.BAD_REQUEST).json({
+        message: `Admin with id ${id} does not exist.`
+      })
+    }
+
+    delete adminInstance.password
+    delete adminInstance.createdAt
+    delete adminInstance.updatedAt
+
+    return res.status(httpStatusCodes.OK).json({
+      message: MESSAGE.OK,
+      payload: adminInstance
+    })
+  }
+  catch (err) {
+    debug.error(NAMESPACE, 'Error occured while logging admin in', err)
+    return res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json({
+      message: MESSAGE.INTERNAL_SERVER_ERROR
+    })
+  }
+}
