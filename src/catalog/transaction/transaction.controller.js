@@ -3,12 +3,13 @@ import {MESSAGE, ACCOUNT_TYPES} from '../../constants'
 import {debug} from '../../utils'
 import httpStatusCodes from 'http-status-codes'
 import moment from 'moment'
+import * as transactionService from './transaction.service'
 
 const NAMESPACE = `transactionController-${moment.utc().toISOString()}`
 
 export const createInnerTransaction = async (req, res, next) => {
   try {
-    const {sendingAccountId, receivingAccountId, amount} = req.body
+    const {sendingAccountId, receivingAccountId, amount, feePayer, content} = req.body
 
     const sendingAccount = await accountService.findAccountById(sendingAccountId)
     if (!sendingAccount) {
@@ -36,9 +37,10 @@ export const createInnerTransaction = async (req, res, next) => {
       })
     }
 
+    await transactionService.createInnerTransactions(sendingAccountId, receivingAccountId, amount, content, feePayer)
+
     return res.status(httpStatusCodes.OK).json({
-      message: MESSAGE.OK,
-      payload: {sendingAccount, receivingAccount}
+      message: MESSAGE.OK
     })
   }
   catch (err) {

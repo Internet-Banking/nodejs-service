@@ -17,3 +17,5 @@ export const TRANSACTION_FEE_PAYER = keyMirror({
   SENDER: null,
   RECEIVER: null
 })
+
+export const TRANSACTION_FEE = 3300
