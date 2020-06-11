@@ -40,7 +40,8 @@ export const createInnerTransaction = async (req, res, next) => {
     await transactionService.createInnerTransactions(sendingAccountId, receivingAccountId, amount, content, feePayer)
 
     return res.status(httpStatusCodes.OK).json({
-      message: MESSAGE.OK
+      message: MESSAGE.OK,
+      receivingAccount
     })
   }
   catch (err) {
