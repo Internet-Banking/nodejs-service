@@ -12,3 +12,8 @@ export const ACCOUNT_TYPES = keyMirror({
 
 export const BANK_CODE = '88'
 export const VN_DESIGNATION_CODE = '9704'
+
+export const TRANSACTION_FEE_PAYER = keyMirror({
+  SENDER: null,
+  RECEIVER: null
+})

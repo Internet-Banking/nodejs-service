@@ -7,7 +7,7 @@ const accountIdSeeds = [
   '9704883027097712',
   '9704885524461138',
   '9704888967748613',
-  '9704889576815390'
+  '9704889576815390' //SAVING account
 ]
 
 module.exports = {accountIdSeeds}
