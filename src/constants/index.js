@@ -18,4 +18,11 @@ export const TRANSACTION_FEE_PAYER = keyMirror({
   RECEIVER: null
 })
 
+export const HTTP_METHOD = keyMirror({
+  GET: null,
+  POST: null,
+  PUT: null,
+  DELETE: null
+})
+
 export const TRANSACTION_FEE = 3300
