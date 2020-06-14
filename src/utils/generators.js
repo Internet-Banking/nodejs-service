@@ -13,7 +13,7 @@ const generateOTPDigit = () => {
   return Math.random().toString().slice(2, 8) // generates 6 digit Numeric OTP
 }
 
-const generateHTMLEmail = (userName, otpDigit) => {
+const generateHTMLEmail = (userName, otpDigit) => { //userName === user.name
 
   return `
     Dear ${userName}, <br/>
@@ -21,6 +21,7 @@ const generateHTMLEmail = (userName, otpDigit) => {
     <br/>
     Your OTP token: &nbsp <b>${otpDigit}</b>
     <br/>
+    Please note: You have 2 minutes to complete this OTP verification session.
     Have a pleasant day!
   `
 }

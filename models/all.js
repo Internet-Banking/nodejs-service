@@ -4,6 +4,7 @@ import Admins from './admin'
 import Employees from './employee'
 import AccountCharges from './account_charge'
 import RecipientAccounts from './recipient_account'
+import OTP from './otp'
 
 Users.hasMany(Accounts, {foreignKey: 'userId'})
 Accounts.belongsTo(Users, {foreignKey: 'userId'})
@@ -17,5 +18,6 @@ export default {
   Admins,
   Employees,
   AccountCharges,
-  RecipientAccounts
+  RecipientAccounts,
+  OTP
 }

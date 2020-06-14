@@ -3,10 +3,13 @@ import crypto from 'crypto'
 import NodeRSA from 'node-rsa'
 import moment from 'moment'
 import {
-  HASH_SECRET, PARTNER_REQUEST_EXPIRED_TIME,
+  HASH_SECRET, PARTNER_REQUEST_EXPIRED_TIME, OTP_EXPIRED_TIME,
   RSA_PUBLIC_KEY, PGP_PARTNER_PUBLIC_KEY, PARTNER_CODE_RSA
 } from '../config'
 //dev team replace RSA_PARTNER_PUBLIC_KEY with RSA_PUBLIC_KEY when testing with partnerInstruction.js
+import * as otpRepo from '../catalog/otp/otp.repository'
+import {debug} from '../utils'
+import {MESSAGE} from '../constants'
 
 //validate property of req by schema
 const schemaValidator = (schema, property) => {
@@ -83,9 +86,40 @@ const asymmetricSignatureVerification = () => {
   }
 }
 
+const OTPVerification = () => {
+  return async (req, res, next) => {
+    try {
+      const userID = req.user.id
+      const reqDigits = req.body.otpDigits
+
+      const otpArr = await otpRepo.findOTPByUserID(userID)
+
+      if (!otpArr) {
+        return res.status(400).json({message: 'User have no OTP verification session !!!'})
+      }
+
+      const verifyObj = otpArr.verifyOTP(reqDigits, OTP_EXPIRED_TIME)
+
+      if (verifyObj.valid) {
+        next()
+      }
+      else {
+        return res.status(400).json({message: verifyObj.message})
+      }
+    }
+    catch (err) {
+      debug.error('OTP', 'Error occured while verify OTP', err)
+      return res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json({
+        message: MESSAGE.INTERNAL_SERVER_ERROR
+      })
+    }
+  }
+}
+
 export default {
   schemaValidator,
   expiryValidator,
   secureHashValidator,
-  asymmetricSignatureVerification
+  asymmetricSignatureVerification,
+  OTPVerification
 }

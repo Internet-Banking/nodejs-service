@@ -34,3 +34,6 @@ export const PARTNER_CODE_RSA = process.env.PARTNER_CODE_RSA
 export const PARTNER_CODE_PGP = process.env.PARTNER_CODE_PGP
 
 export const PARTNER_REQUEST_EXPIRED_TIME = 60000 //60s
+
+//use to verify otp
+export const OTP_EXPIRED_TIME = 120000 //120s

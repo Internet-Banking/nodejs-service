@@ -1,15 +1,12 @@
 import * as userService from './user.service'
 import * as accountService from '../account/account.service'
+import * as otpService from '../otp/otp.repository'
 import httpStatusCodes from 'http-status-codes'
 import moment from 'moment'
 import {debug, crypt, generators} from '../../utils'
 import {MESSAGE} from '../../constants'
 
 const NAMESPACE = `userController-${moment.utc().toISOString()}`
-
-// the global object to manage otp (storage and verify)
-// storage otpDigit, otpID (===userID) & and verify OTP
-const optObject = [];
 
 export const findUserInfoByAccountIdForPartner = async (req, res, next) => {
   try {
@@ -126,13 +123,22 @@ export const findAllAccountsOfUser = async (req, res, next) => {
 
 export const generateAndSendOTP = async (req, res, next) => {
   try {
-    // take user infor because we access route without login and auth
-    const {id} = req.body
-    const userInstance = await userService.findUserById(id)
-    const {name, email} = userInstance
+    const {id, name, email} = req.user
+    const userID = id
 
     const otpDigit = generators.generateOTPDigit() // Generate otpDigits
-    optObject.push({otpDigit, optID: id}) // Save OTP to otpObj array
+    
+    // Find old OTP of user and remove from the DB
+    const oldOTP = await otpService.findOTPByUserID(userID)
+    
+    if (oldOTP) {
+      oldOTP.destroy()
+    }
+
+    // Save new OTP to DB
+    await otpService.createOTP(userID, otpDigit)
+
+    //  Create template for otp email
     const html = generators.generateHTMLEmail(name, otpDigit)
 
     await userService.sendOTPMail(email, html) // service send email OTP to user email
@@ -142,7 +148,7 @@ export const generateAndSendOTP = async (req, res, next) => {
 
     return res.status(httpStatusCodes.OK).json({
       message: MESSAGE.OK,
-      payload: userInstance,
+      payload: req.user,
       msg: `OTP already send to email: ${email}`
     })
   }
