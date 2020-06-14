@@ -130,9 +130,9 @@ export const generateAndSendOTP = async (req, res, next) => {
     
     // Find old OTP of user and remove from the DB
     const oldOTP = await otpService.findOTPByUserID(userID)
-    
+
     if (oldOTP) {
-      oldOTP.destroy()
+      await oldOTP.destroy()
     }
 
     // Save new OTP to DB

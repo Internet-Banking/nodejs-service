@@ -92,15 +92,16 @@ const OTPVerification = () => {
       const userID = req.user.id
       const reqDigits = req.body.otpDigits
 
-      const otpArr = await otpRepo.findOTPByUserID(userID)
+      const otpInstance = await otpRepo.findOTPByUserID(userID)
 
-      if (!otpArr) {
+      if (!otpInstance) {
         return res.status(400).json({message: 'User have no OTP verification session !!!'})
       }
 
-      const verifyObj = otpArr.verifyOTP(reqDigits, OTP_EXPIRED_TIME)
+      const verifyObj = otpInstance.verifyOTP(reqDigits, OTP_EXPIRED_TIME)
 
       if (verifyObj.valid) {
+        await otpInstance.update({isUsed: true})
         next()
       }
       else {

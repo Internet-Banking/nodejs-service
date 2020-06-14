@@ -17,6 +17,10 @@ const OTP = sequelize.define('otps', {
     type: Sequelize.STRING,
     allowNull: false
   },
+  isUsed: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  },
   createdAt: {
     allowNull: false,
     type: Sequelize.DATE
@@ -28,7 +32,7 @@ const OTP = sequelize.define('otps', {
 }, {})
 
 OTP.prototype.verifyOTP = function (reqDigits, otpExpiredTime) {
-  return otpChecker.verifyOTP(reqDigits, this.digits, this.createdAt, otpExpiredTime)
+  return otpChecker.verifyOTP(reqDigits, this.digits, this.createdAt, otpExpiredTime, this.isUsed)
 }
 
 export default OTP

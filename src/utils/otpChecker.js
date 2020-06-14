@@ -1,6 +1,7 @@
 import moment from 'moment'
 
-const verifyOTP = (reqDigits, otpDigitsDB, otpCreatedAtDB, otpExpiredTime) => {
+const verifyOTP = (reqDigits, otpDigitsDB, otpCreatedAtDB, otpExpiredTime, isUsed) => {
+
   const reqSendAt = moment.utc()
   const otpCreatedAt = moment.utc(otpCreatedAtDB)
 
@@ -9,7 +10,7 @@ const verifyOTP = (reqDigits, otpDigitsDB, otpCreatedAtDB, otpExpiredTime) => {
   if (elapsedTimeInMilliseconds > otpExpiredTime) {
     return {
       valid: false,
-      message: 'The OTP verification session has expired !!!'
+      message: 'The OTP verify session has expired !!!'
     }
   }
 
@@ -17,6 +18,13 @@ const verifyOTP = (reqDigits, otpDigitsDB, otpCreatedAtDB, otpExpiredTime) => {
     return {
       valid: false,
       message: 'The OTP digits is not correct !!!'
+    }
+  }
+
+  if (isUsed) {
+    return {
+      valid: false,
+      message: 'The OTP was used in the previous verify session !!!'
     }
   }
 
