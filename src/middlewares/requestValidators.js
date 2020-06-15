@@ -7,6 +7,9 @@ import {
   RSA_PUBLIC_KEY, PGP_PARTNER_PUBLIC_KEY, PARTNER_CODE_RSA
 } from '../config'
 //dev team replace RSA_PARTNER_PUBLIC_KEY with RSA_PUBLIC_KEY when testing with partnerInstruction.js
+import * as otpRepo from '../catalog/otp/otp.repository'
+import {debug} from '../utils'
+import {MESSAGE} from '../constants'
 
 //validate property of req by schema
 const schemaValidator = (schema, property) => {
@@ -83,9 +86,41 @@ const asymmetricSignatureVerification = () => {
   }
 }
 
+const OTPVerification = () => {
+  return async (req, res, next) => {
+    try {
+      const userID = req.user.id
+      const reqOtpDigits = req.body.otpDigits
+
+      const otpInstance = await otpRepo.findOTPByUserID(userID, false)
+
+      if (!otpInstance) {
+        return res.status(httpStatusCodes.BAD_REQUEST).json({message: 'User have no OTP verify session !!!'})
+      }
+
+      const verifyObj = otpInstance.verifyOTP(reqOtpDigits)
+
+      if (verifyObj.valid) {
+        await otpInstance.update({isUsed: true})
+        next()
+      }
+      else {
+        return res.status(httpStatusCodes.BAD_REQUEST).json({message: verifyObj.message})
+      }
+    }
+    catch (err) {
+      debug.error('OTP', 'Error occured while verify OTP', err)
+      return res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json({
+        message: MESSAGE.INTERNAL_SERVER_ERROR
+      })
+    }
+  }
+}
+
 export default {
   schemaValidator,
   expiryValidator,
   secureHashValidator,
-  asymmetricSignatureVerification
+  asymmetricSignatureVerification,
+  OTPVerification
 }

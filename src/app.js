@@ -33,6 +33,9 @@ app.use(cors({
 }))
 
 const swaggerDocs = yamljs.load('./openapi.yaml')
+app.get('/', (req, res) => {
+  res.send('Well come to Internet Banking server!!!')
+})
 app.use('/documentation', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 app.use('/partner', partnerRoute)
 app.use('/admin', adminRoute)
