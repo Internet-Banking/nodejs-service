@@ -4,7 +4,7 @@ import NodeRSA from 'node-rsa'
 import moment from 'moment'
 import {
   HASH_SECRET, PARTNER_REQUEST_EXPIRED_TIME,
-  RSA_PUBLIC_KEY, PGP_PARTNER_PUBLIC_KEY, PARTNER_CODE_RSA
+  RSA_PARTNER_PUBLIC_KEY, PGP_PARTNER_PUBLIC_KEY, PARTNER_CODE_RSA
 } from '../config'
 //dev team replace RSA_PARTNER_PUBLIC_KEY with RSA_PUBLIC_KEY when testing with partnerInstruction.js
 
@@ -69,7 +69,7 @@ const asymmetricSignatureVerification = () => {
 
     const partnerPublicKey =
       partnerCode === PARTNER_CODE_RSA
-        ? new NodeRSA(RSA_PUBLIC_KEY)
+        ? new NodeRSA(RSA_PARTNER_PUBLIC_KEY)
         : new NodeRSA(PGP_PARTNER_PUBLIC_KEY)
 
     const isVerified = partnerPublicKey.verify(req.body, signature, 'base64', 'base64')
