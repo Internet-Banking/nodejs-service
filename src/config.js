@@ -33,6 +33,7 @@ export const PGP_PARTNER_BASIC_AUTH_PASSWORD = process.env.PGP_PARTNER_BASIC_AUT
 export const PGP_PARTNER_HASH_SECRET = process.env.PGP_PARTNER_HASH_SECRET
 export const PGP_PARTNER_PUBLIC_KEY = process.env.PGP_PARTNER_PUBLIC_KEY.replace(/\\n/g, '\n')
 
+export const RSA_PARTNER_SECRET_CODE = process.env.RSA_PARTNER_SECRET_CODE
 export const RSA_PARTNER_PUBLIC_KEY = process.env.RSA_PARTNER_PUBLIC_KEY.replace(/\\n/g, '\n')
 
 //partnerCode in partner's request
