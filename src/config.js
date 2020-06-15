@@ -17,6 +17,11 @@ export const SALT_ROUNDS = process.env.SALT_ROUNDS
 export const JWT_SECRET = process.env.JWT_SECRET
 export const TOKEN_EXPIRED_TIME = process.env.TOKEN_EXPIRED_TIME
 
+//used to send mail from @sendgrid/mail
+export const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY
+export const SENDGRID_SENDER_EMAIL = 'team29internetbanking@gmail.com'
+export const OTP_MAIL_SUBJECT = '[INTERNET_BANKING_29 - OTP]'
+
 //used to sign in request sent to partner
 export const RSA_PRIVATE_KEY = process.env.RSA_PRIVATE_KEY.replace(/\\n/g, '\n')
 export const PGP_PRIVATE_KEY = process.env.PGP_PRIVATE_KEY.replace(/\\n/g, '\n')
@@ -41,3 +46,6 @@ export const PARTNER_CODE_RSA = process.env.PARTNER_CODE_RSA
 export const PARTNER_CODE_PGP = process.env.PARTNER_CODE_PGP
 
 export const PARTNER_REQUEST_EXPIRED_TIME = 60000 //60s
+
+//use to verify otp
+export const OTP_EXPIRED_TIME = 120000 //120s

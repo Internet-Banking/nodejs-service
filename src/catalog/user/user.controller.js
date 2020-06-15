@@ -1,9 +1,11 @@
 import * as userService from './user.service'
 import * as accountService from '../account/account.service'
+import * as otpService from '../otp/otp.repository'
 import httpStatusCodes from 'http-status-codes'
 import moment from 'moment'
-import {debug, crypt} from '../../utils'
+import {debug, crypt, generators} from '../../utils'
 import {MESSAGE} from '../../constants'
+import {mail} from '../../fetches'
 
 const NAMESPACE = `userController-${moment.utc().toISOString()}`
 
@@ -150,6 +152,43 @@ export const findAllAccountsOfUserById = async (req, res, next) => {
   }
   catch (err) {
     debug.error(NAMESPACE, 'Error occured while finding all accounts of user by id', err)
+    return res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json({
+      message: MESSAGE.INTERNAL_SERVER_ERROR
+    })
+  }
+}
+
+export const generateAndSendOTP = async (req, res, next) => {
+  try {
+    const {id, name, email} = req.user
+    const userID = id
+
+    const otpDigit = generators.generateOTPDigit() // Generate otpDigits
+    
+    // Find old OTP of user and remove from the DB
+    const oldOTP = await otpService.findOTPByUserID(userID, false)
+
+    if (oldOTP) {
+      await oldOTP.destroy()
+    }
+
+    // Save new OTP to DB
+    await otpService.createOTP(userID, otpDigit)
+
+    //  Create template for otp email
+    const html = generators.generateHTMLEmail(name, otpDigit)
+
+    await mail.sendOTPMail(email, html) // service send email OTP to user email
+
+    //for testing -> replace your email to receive OTP from the server, then you can check your mail box
+    //for example: await userService.sendOTPMail('hoangnghia.binhthuan@gmail.com', html)
+
+    return res.status(httpStatusCodes.OK).json({
+      message: MESSAGE.OK
+    })
+  }
+  catch (err) {
+    debug.error(NAMESPACE, 'Error occured while send OTP to user', err)
     return res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json({
       message: MESSAGE.INTERNAL_SERVER_ERROR
     })

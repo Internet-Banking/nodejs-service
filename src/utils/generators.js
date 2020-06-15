@@ -9,4 +9,22 @@ const generateAccountID = () => {
  */
 }
 
-export default {generateAccountID}
+const generateOTPDigit = () => {
+  return Math.random().toString().slice(2, 8) // generates 6 digit Numeric OTP
+}
+
+const generateHTMLEmail = (userName, otpDigit) => { //userName === user.name
+
+  return `
+    Dear ${userName}, <br/>
+    Please use the OTP token below to complete your online request.
+    <br/>
+    Your OTP token: <b>${otpDigit}</b>
+    <br/>
+    Please note: You have 2 minutes to complete this OTP verify session.
+    <br/>
+    Have a pleasant day!
+  `
+}
+
+export default {generateAccountID, generateOTPDigit, generateHTMLEmail}

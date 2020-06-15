@@ -1,3 +1,4 @@
+
 import * as userRepo from './user.repository'
 import * as accountRepo from '../account/account.repository'
 
@@ -34,7 +35,7 @@ export const createUser = async (email, name, username, phone, password) => {
 
 export const authenticateUser = async (username, password) => {
   const userInstance = await userRepo.findUserByUsername(username, false)
-  
+
   if (userInstance && userInstance.validPassword(password)) {
     delete userInstance.dataValues.password
     delete userInstance.dataValues.isDeleted
