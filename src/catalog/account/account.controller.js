@@ -1,4 +1,5 @@
 import * as accountService from './account.service'
+import * as partnerRequestLogService from '../partner_request_log/partner_request_log.service'
 import httpStatusCodes from 'http-status-codes'
 import moment from 'moment'
 import {debug} from '../../utils'
@@ -6,7 +7,7 @@ import {MESSAGE} from '../../constants'
 
 const NAMESPACE = `accountController-${moment.utc().toISOString()}`
 
-export const increaseBalanceById = async (req, res, next) => {
+export const increaseBalanceByIdForPartner = async (req, res, next) => {
   try {
     const {id} = req.params
     const accountInstance = await accountService.findAccountById(id)
@@ -16,7 +17,9 @@ export const increaseBalanceById = async (req, res, next) => {
       })
     }
 
-    const {amount} = req.body
+    const {amount, partnerCode} = req.body
+    const {params, query, headers, body} = req
+    await partnerRequestLogService.createPartnerRequestLog(partnerCode, params, query, headers, body)
 
     const result = await accountService.increaseBalanceById(id, amount)
     delete result.isDeleted

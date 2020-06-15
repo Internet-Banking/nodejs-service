@@ -5,6 +5,7 @@ import Employees from './employee'
 import AccountCharges from './account_charge'
 import RecipientAccounts from './recipient_account'
 import InnerTransactions from './inner_transactions'
+import PartnerRequestLogs from './partner_request_logs'
 
 Users.hasMany(Accounts, {foreignKey: 'userId'})
 Accounts.belongsTo(Users, {foreignKey: 'userId'})
@@ -21,5 +22,6 @@ export default {
   Employees,
   AccountCharges,
   RecipientAccounts,
-  InnerTransactions
+  InnerTransactions,
+  PartnerRequestLogs
 }

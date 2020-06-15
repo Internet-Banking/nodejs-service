@@ -30,7 +30,7 @@ router.patch('/account/:id',
   asymmetricSignatureVerification(),
   expiryValidator('body'),
   secureHashValidator('body'),
-  accountController.increaseBalanceById
+  accountController.increaseBalanceByIdForPartner
 )
 
 export default router
