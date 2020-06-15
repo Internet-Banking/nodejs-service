@@ -15,6 +15,8 @@ export const TOKEN_EXPIRED_TIME = process.env.TOKEN_EXPIRED_TIME
 
 //used to send mail from @sendgrid/mail
 export const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY
+export const SENDGRID_SENDER_EMAIL = 'team29internetbanking@gmail.com'
+export const OTP_MAIL_SUBJECT = '[INTERNET_BANKING_29 - OTP]'
 
 //used to sign in request sent to partner
 export const RSA_PRIVATE_KEY = process.env.RSA_PRIVATE_KEY.replace(/\\n/g, '\n')

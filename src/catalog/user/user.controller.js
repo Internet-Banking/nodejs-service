@@ -5,6 +5,7 @@ import httpStatusCodes from 'http-status-codes'
 import moment from 'moment'
 import {debug, crypt, generators} from '../../utils'
 import {MESSAGE} from '../../constants'
+import {mail} from '../../fetches'
 
 const NAMESPACE = `userController-${moment.utc().toISOString()}`
 
@@ -129,7 +130,7 @@ export const generateAndSendOTP = async (req, res, next) => {
     const otpDigit = generators.generateOTPDigit() // Generate otpDigits
     
     // Find old OTP of user and remove from the DB
-    const oldOTP = await otpService.findOTPByUserID(userID)
+    const oldOTP = await otpService.findOTPByUserID(userID, false)
 
     if (oldOTP) {
       await oldOTP.destroy()
@@ -141,15 +142,13 @@ export const generateAndSendOTP = async (req, res, next) => {
     //  Create template for otp email
     const html = generators.generateHTMLEmail(name, otpDigit)
 
-    await userService.sendOTPMail(email, html) // service send email OTP to user email
+    await mail.sendOTPMail(email, html) // service send email OTP to user email
 
     //for testing -> replace your email to receive OTP from the server, then you can check your mail box
     //for example: await userService.sendOTPMail('hoangnghia.binhthuan@gmail.com', html)
 
     return res.status(httpStatusCodes.OK).json({
-      message: MESSAGE.OK,
-      payload: req.user,
-      msg: `OTP already send to email: ${email}`
+      message: MESSAGE.OK
     })
   }
   catch (err) {

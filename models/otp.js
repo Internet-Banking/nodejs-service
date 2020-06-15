@@ -1,6 +1,7 @@
 'use strict'
 import {sequelize, Sequelize} from '../src/db'
-import {otpChecker} from '../src/utils'
+import moment from 'moment'
+import {OTP_EXPIRED_TIME} from '../src/config'
 
 const OTP = sequelize.define('otps', {
   id: {
@@ -31,8 +32,39 @@ const OTP = sequelize.define('otps', {
   }
 }, {})
 
-OTP.prototype.verifyOTP = function (reqDigits, otpExpiredTime) {
-  return otpChecker.verifyOTP(reqDigits, this.digits, this.createdAt, otpExpiredTime, this.isUsed)
+OTP.prototype.verifyOTP = function (reqOtpDigits) {
+
+  const reqSendAt = moment.utc()
+  const otpCreatedAt = moment.utc(this.createdAt)
+
+  const elapsedTimeInMilliseconds = reqSendAt.diff(otpCreatedAt)
+
+  if (elapsedTimeInMilliseconds > OTP_EXPIRED_TIME) {
+    return {
+      valid: false,
+      message: 'The OTP verify session has expired !!!'
+    }
+  }
+
+  if (reqOtpDigits !== this.digits) {
+    return {
+      valid: false,
+      message: 'The OTP digits is not correct !!!'
+    }
+  }
+
+  if (this.isUsed) {
+    return {
+      valid: false,
+      message: 'The OTP was used in the previous verify session !!!'
+    }
+  }
+
+  return {
+    valid: true,
+    message: 'OTP verification successfully !!!'
+  }
+
 }
 
 export default OTP

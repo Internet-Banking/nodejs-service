@@ -19,7 +19,7 @@ const generateHTMLEmail = (userName, otpDigit) => { //userName === user.name
     Dear ${userName}, <br/>
     Please use the OTP token below to complete your online request.
     <br/>
-    Your OTP token: &nbsp <b>${otpDigit}</b>
+    Your OTP token: <b>${otpDigit}</b>
     <br/>
     Please note: You have 2 minutes to complete this OTP verify session.
     <br/>

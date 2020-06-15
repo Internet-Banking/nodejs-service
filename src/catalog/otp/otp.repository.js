@@ -9,6 +9,7 @@ export const findOTPByUserID = async (userID, raw = true) => {
   return await Models.OTP.findOne({
     where: {
       userID
-    }
+    },
+    raw
   })
 }

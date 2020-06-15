@@ -3,7 +3,7 @@ import crypto from 'crypto'
 import NodeRSA from 'node-rsa'
 import moment from 'moment'
 import {
-  HASH_SECRET, PARTNER_REQUEST_EXPIRED_TIME, OTP_EXPIRED_TIME,
+  HASH_SECRET, PARTNER_REQUEST_EXPIRED_TIME,
   RSA_PUBLIC_KEY, PGP_PARTNER_PUBLIC_KEY, PARTNER_CODE_RSA
 } from '../config'
 //dev team replace RSA_PARTNER_PUBLIC_KEY with RSA_PUBLIC_KEY when testing with partnerInstruction.js
@@ -90,22 +90,22 @@ const OTPVerification = () => {
   return async (req, res, next) => {
     try {
       const userID = req.user.id
-      const reqDigits = req.body.otpDigits
+      const reqOtpDigits = req.body.otpDigits
 
-      const otpInstance = await otpRepo.findOTPByUserID(userID)
+      const otpInstance = await otpRepo.findOTPByUserID(userID, false)
 
       if (!otpInstance) {
-        return res.status(400).json({message: 'User have no OTP verification session !!!'})
+        return res.status(httpStatusCodes.BAD_REQUEST).json({message: 'User have no OTP verify session !!!'})
       }
 
-      const verifyObj = otpInstance.verifyOTP(reqDigits, OTP_EXPIRED_TIME)
+      const verifyObj = otpInstance.verifyOTP(reqOtpDigits)
 
       if (verifyObj.valid) {
         await otpInstance.update({isUsed: true})
         next()
       }
       else {
-        return res.status(400).json({message: verifyObj.message})
+        return res.status(httpStatusCodes.BAD_REQUEST).json({message: verifyObj.message})
       }
     }
     catch (err) {
