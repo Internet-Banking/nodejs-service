@@ -194,3 +194,31 @@ export const generateAndSendOTP = async (req, res, next) => {
     })
   }
 }
+
+export const getUserBasicInfo = async (req, res, next) => {
+  try {
+    const {id} = req.user
+
+    const userInstance = await userService.findUserById(id)
+    if (!userInstance) {
+      return res.status(httpStatusCodes.BAD_REQUEST).json({
+        message: `User with id ${id} does not exist.`
+      })
+    }
+
+    delete userInstance.password
+    delete userInstance.createdAt
+    delete userInstance.updatedAt
+
+    return res.status(httpStatusCodes.OK).json({
+      message: MESSAGE.OK,
+      payload: userInstance
+    })
+  }
+  catch (err) {
+    debug.error(NAMESPACE, 'Error occured while getting user basic info', err)
+    return res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json({
+      message: MESSAGE.INTERNAL_SERVER_ERROR
+    })
+  }
+}

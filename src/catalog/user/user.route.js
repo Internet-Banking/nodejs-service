@@ -10,6 +10,7 @@ router.post('/', auth.employee(), userController.createUser)
 router.post('/login', userController.login)
 router.get('/account', auth.user(), userController.findAllAccountsOfUser)
 router.get('/:id/account', auth.employee(), userController.findAllAccountsOfUserById)
+router.get('/me', auth.user(), userController.getUserBasicInfo)
 
 router.get('/recipient_account', auth.user(), recipientAccountController.findAllRecipientAccountsOfUser)
 router.post('/recipient_account', auth.user(), recipientAccountController.createRecipientAccount)
