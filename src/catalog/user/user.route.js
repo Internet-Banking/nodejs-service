@@ -17,14 +17,24 @@ router.post('/recipient_account', auth.user(), recipientAccountController.create
 router.put('/recipient_account/:id', auth.user(), recipientAccountController.updateRecipientAccountById)
 router.delete('/recipient_account/:id', auth.user(), recipientAccountController.deleteRecipientAccountById)
 
-//this route use to generate and send OTP to user email
+//this route use to generate and send OTP to user email after auth
 router.post('/otp', auth.user(), userController.generateAndSendOTP)
+
+//this route use to generate and send OTP to user email without auth
+router.post('/otp_without_auth', userController.generateAndSendOTPWithoutAuth)
 
 //this route use to test middlewares verify OTP
 router.post('/verify_otp', auth.user(), requestValidation.OTPVerification(), (req, res) => {
   return res.status(200).json({
     message: 'OTP verification successfully',
     payload: req.user
+  })
+})
+
+//this route use to test middlewares verify OTP without auth
+router.post('/verify_otp_without_auth', requestValidation.OTPVerificationWithoutAuth(), (req, res) => {
+  return res.status(200).json({
+    message: 'OTP verification successfully'
   })
 })
 
