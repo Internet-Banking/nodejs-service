@@ -10,11 +10,18 @@ const NAMESPACE = `transactionController-${moment.utc().toISOString()}`
 export const createInnerTransaction = async (req, res, next) => {
   try {
     const {sendingAccountId, receivingAccountId, amount, feePayer, content} = req.body
+    const {id} = req.user
 
     const sendingAccount = await accountService.findAccountById(sendingAccountId)
     if (!sendingAccount) {
       return res.status(httpStatusCodes.BAD_REQUEST).json({
         message: 'Sending account does not exist.'
+      })
+    }
+
+    if (sendingAccount.userId !== id) {
+      return res.status(httpStatusCodes.BAD_REQUEST).json({
+        message: 'Sending account does not belong to this user.'
       })
     }
 
@@ -39,6 +46,7 @@ export const createInnerTransaction = async (req, res, next) => {
 
     await transactionService.createInnerTransactions(sendingAccountId, receivingAccountId, amount, content, feePayer)
 
+    delete receivingAccount.balance //do not show balance to sender
     return res.status(httpStatusCodes.OK).json({
       message: MESSAGE.OK,
       receivingAccount

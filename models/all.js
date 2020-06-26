@@ -6,7 +6,7 @@ import AccountCharges from './account_charge'
 import RecipientAccounts from './recipient_account'
 import InnerTransactions from './inner_transactions'
 import PartnerRequestLogs from './partner_request_logs'
-import OTPs from './otp'
+import OTP from './otp'
 
 Users.hasMany(Accounts, {foreignKey: 'userId'})
 Accounts.belongsTo(Users, {foreignKey: 'userId'})
@@ -25,5 +25,5 @@ export default {
   RecipientAccounts,
   InnerTransactions,
   PartnerRequestLogs,
-  OTPs
+  OTP
 }
