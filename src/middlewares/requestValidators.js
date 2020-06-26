@@ -8,6 +8,7 @@ import {
 } from '../config'
 //dev team replace RSA_PARTNER_PUBLIC_KEY with RSA_PUBLIC_KEY when testing with partnerInstruction.js
 import * as otpRepo from '../catalog/otp/otp.repository'
+import * as userService from '../catalog/user/user.repository'
 import {debug} from '../utils'
 import {MESSAGE} from '../constants'
 
@@ -117,10 +118,49 @@ const OTPVerification = () => {
   }
 }
 
+const OTPVerificationWithoutAuth = () => {
+  return async (req, res, next) => {
+    try {
+      const email = req.body.email
+      const reqOtpDigits = req.body.otpDigits
+
+      const userInstance = await userService.findUserByEmail(email)
+      if (!userInstance) {
+        return res.status(httpStatusCodes.BAD_REQUEST).json({
+          message: `User with email ${email} does not exist.`
+        })
+      }
+
+      const otpInstance = await otpRepo.findOTPByUserID(userInstance.id, false)
+
+      if (!otpInstance) {
+        return res.status(httpStatusCodes.BAD_REQUEST).json({message: 'User have no OTP verify session !!!'})
+      }
+
+      const verifyObj = otpInstance.verifyOTP(reqOtpDigits)
+
+      if (verifyObj.valid) {
+        await otpInstance.update({isUsed: true})
+        next()
+      }
+      else {
+        return res.status(httpStatusCodes.BAD_REQUEST).json({message: verifyObj.message})
+      }
+    }
+    catch (err) {
+      debug.error('OTP', 'Error occured while verify OTP', err)
+      return res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json({
+        message: MESSAGE.INTERNAL_SERVER_ERROR
+      })
+    }
+  }
+}
+
 export default {
   schemaValidator,
   expiryValidator,
   secureHashValidator,
   asymmetricSignatureVerification,
-  OTPVerification
+  OTPVerification,
+  OTPVerificationWithoutAuth
 }

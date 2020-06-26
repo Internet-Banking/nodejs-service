@@ -194,3 +194,71 @@ export const generateAndSendOTP = async (req, res, next) => {
     })
   }
 }
+
+export const generateAndSendOTPWithoutAuth = async (req, res, next) => {
+  try {
+    const email = req.body.email
+
+    const userInstance = await userService.findUserByEmail(email)
+    if (!userInstance) {
+      return res.status(httpStatusCodes.BAD_REQUEST).json({
+        message: `User with email ${email} does not exist.`
+      })
+    }
+
+    const otpDigit = generators.generateOTPDigit() // Generate otpDigits
+    
+    // Find old OTP of user and remove from the DB
+    const oldOTP = await otpService.findOTPByUserID(userInstance.id, false)
+
+    if (oldOTP) {
+      await oldOTP.destroy()
+    }
+
+    // Save new OTP to DB
+    await otpService.createOTP(userInstance.id, otpDigit)
+
+    //  Create template for otp email
+    const html = generators.generateHTMLEmail(userInstance.name, otpDigit)
+
+    await mail.sendOTPMail(email, html) // service send email OTP to user email
+
+    return res.status(httpStatusCodes.OK).json({
+      message: MESSAGE.OK
+    })
+  }
+  catch (err) {
+    debug.error(NAMESPACE, 'Error occured while send OTP to user', err)
+    return res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json({
+      message: MESSAGE.INTERNAL_SERVER_ERROR
+    })
+  }
+}
+
+export const getUserBasicInfo = async (req, res, next) => {
+  try {
+    const {id} = req.user
+
+    const userInstance = await userService.findUserById(id)
+    if (!userInstance) {
+      return res.status(httpStatusCodes.BAD_REQUEST).json({
+        message: `User with id ${id} does not exist.`
+      })
+    }
+
+    delete userInstance.password
+    delete userInstance.createdAt
+    delete userInstance.updatedAt
+
+    return res.status(httpStatusCodes.OK).json({
+      message: MESSAGE.OK,
+      payload: userInstance
+    })
+  }
+  catch (err) {
+    debug.error(NAMESPACE, 'Error occured while getting user basic info', err)
+    return res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json({
+      message: MESSAGE.INTERNAL_SERVER_ERROR
+    })
+  }
+}

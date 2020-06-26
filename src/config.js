@@ -14,8 +14,8 @@ export const EMPLOYEE_FRONTEND_URL = process.env.EMPLOYEE_FRONTEND_URL || 'http:
 export const ADMIN_FRONTEND_URL = process.env.ADMIN_FRONTEND_URL || 'http://localhost:3003'
 
 export const SALT_ROUNDS = process.env.SALT_ROUNDS
-export const JWT_SECRET = process.env.JWT_SECRET
-export const TOKEN_EXPIRED_TIME = process.env.TOKEN_EXPIRED_TIME
+export const JWT_SECRET = process.env.JWT_SECRET || 'dont let them know'
+export const TOKEN_EXPIRED_TIME = process.env.TOKEN_EXPIRED_TIME || '2h'
 
 //used to send mail from @sendgrid/mail
 export const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY
