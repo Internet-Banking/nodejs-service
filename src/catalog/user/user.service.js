@@ -50,3 +50,9 @@ export const authenticateUser = async (username, password) => {
 export const findUserInfoByAccountIdForPartner = async (accountId) => {
   return await userRepo.findUserInfoByAccountIdForPartner(accountId)
 }
+
+export const changePassword = async (id, newPassword, oldPassword) => {
+  const userInstance = await userRepo.findUserById(id, false)
+  const result = await userInstance.changePassword(newPassword, oldPassword)
+  return result
+}

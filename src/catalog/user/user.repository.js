@@ -11,9 +11,6 @@ export const findUserById = async (userId, raw = true) => {
       id: userId,
       isDeleted: false
     },
-    attributes: {
-      exclude: ['password']
-    },
     raw
   })
 }

@@ -57,4 +57,13 @@ Users.prototype.validPassword = function (password) {
   return crypt.comparePassword(password, this.password)
 }
 
+Users.prototype.changePassword = function (newPassword, oldPassword) {
+  if (oldPassword) {
+    const isMatched = crypt.comparePassword(oldPassword, this.password)
+    if (!isMatched) return false
+  }
+  this.set('password', crypt.hashPassword(newPassword)).save()
+  return true
+}
+
 export default Users
