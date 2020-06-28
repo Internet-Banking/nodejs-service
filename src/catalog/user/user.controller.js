@@ -262,3 +262,34 @@ export const getUserBasicInfo = async (req, res, next) => {
     })
   }
 }
+
+export const changePassword = async (req, res, next) => {
+  try {
+    const {id} = req.user
+    const {isForgot = false} = req
+    const {oldPassword, newPassword} = req.body
+    
+    if ((!isForgot && !oldPassword) || !newPassword) {
+      return res.status(httpStatusCodes.BAD_REQUEST).json({
+        message: httpStatusCodes.getStatusText(httpStatusCodes.BAD_REQUEST)
+      })
+    }
+
+    const isChanged = await userService.changePassword(id, newPassword, oldPassword)
+  
+    if (!isChanged) {
+      return res.status(httpStatusCodes.BAD_REQUEST).json({
+        message: 'Your current password does not match'
+      })
+    }
+    return res.status(httpStatusCodes.OK).json({
+      message: 'Change password successfully'
+    })
+  }
+  catch (err) {
+    debug.error(NAMESPACE, 'Error occured while changing password', err)
+    return res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json({
+      message: MESSAGE.INTERNAL_SERVER_ERROR
+    })
+  }
+}

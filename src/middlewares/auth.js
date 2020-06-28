@@ -92,6 +92,7 @@ const user = () => {
     
       const decoded = jwt.verify(jwtToken, JWT_SECRET)
       const userInstance = await findUserById(decoded.userId)
+      delete userInstance.password
 
       if (!userInstance) {
         return res.status(httpStatusCodes.UNAUTHORIZED).json({

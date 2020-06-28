@@ -139,6 +139,9 @@ const OTPVerificationWithoutAuth = () => {
 
       const verifyObj = otpInstance.verifyOTP(reqOtpDigits)
 
+      req.user = userInstance
+      req.isForgot = true
+
       if (verifyObj.valid) {
         await otpInstance.update({isUsed: true})
         next()
