@@ -3,8 +3,8 @@ import {sequelize} from '../../db'
 import {TRANSACTION_FEE, TRANSACTION_FEE_PAYER} from '../../constants'
 
 export const createInnerTransactions = async (sendingAccountId, receivingAccountId, amount, content, feePayer) => {
-  let increasingAmount = amount
-  let decreasingAmount = amount
+  let increasingAmount = parseInt(amount)
+  let decreasingAmount = parseInt(amount)
   if (feePayer === TRANSACTION_FEE_PAYER.SENDER) {
     decreasingAmount += TRANSACTION_FEE
   }
