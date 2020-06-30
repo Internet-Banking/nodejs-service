@@ -6,7 +6,7 @@ export const findAccountById = async (accountId) => {
 }
 
 export const findAllAccountsOfUser = async (userId) => {
-  return await accountRepo.findAllAccountsOfUser(userId, ['id', 'balance', 'type'])
+  return await accountRepo.findAllAccountsOfUser(userId)
 }
 
 export const increaseBalanceById = async (accountId, amount) => {

@@ -5,8 +5,8 @@ export const findAccountById = async (accountId, raw = true) => {
   return await Models.Accounts.findOne({where: {id: accountId, isDeleted: false}, raw})
 }
 
-export const findAllAccountsOfUser = async (userId, attributes = [], raw = true) => {
-  return await Models.Accounts.findAll({where: {userId}, attributes, raw})
+export const findAllAccountsOfUser = async (userId, raw = true) => {
+  return await Models.Accounts.findAll({where: {userId}, raw})
 }
 
 export const findAccountWithUserInfoByAccountId = async (accountId, raw = true) => {
