@@ -62,7 +62,6 @@ export const createRecipientAccount = async (req, res, next) => {
 
 export const updateRecipientAccountById = async (req, res, next) => {
   try {
-    const userId = req.user.id
     const {id} = req.params
     const {accountId, nickname} = req.body
     
@@ -70,13 +69,6 @@ export const updateRecipientAccountById = async (req, res, next) => {
     if (!accountInstance) {
       return res.status(httpStatusCodes.BAD_REQUEST).json({
         message: `Account with id ${accountId} does not exist.`
-      })
-    }
-
-    const recipientAccountIns = await recipientAccountService.findRecipientAccountOfUserByAccountId(userId, accountId)
-    if (recipientAccountIns) {
-      return res.status(httpStatusCodes.BAD_REQUEST).json({
-        message: 'User has added this account as a recipient account.'
       })
     }
 
