@@ -5,6 +5,10 @@ export const findAccountById = async (accountId) => {
   return await accountRepo.findAccountById(accountId)
 }
 
+export const findAccountWithUserInfoByAccountId = async (accountId) => {
+  return await accountRepo.findAccountWithUserInfoByAccountId(accountId)
+}
+
 export const findAllAccountsOfUser = async (userId) => {
   return await accountRepo.findAllAccountsOfUser(userId)
 }

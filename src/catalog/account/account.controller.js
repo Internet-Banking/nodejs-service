@@ -87,3 +87,27 @@ export const findAllAccountsOfUser = async (req, res, next) => {
     })
   }
 }
+
+export const findAccountWithUserInfoByAccountId = async (req, res, next) => {
+  try {
+    const {id} = req.params
+    const accountInstance = await accountService.findAccountWithUserInfoByAccountId(id)
+
+    if (!accountInstance) {
+      return res.status(httpStatusCodes.BAD_REQUEST).json({
+        message: `Account with id ${id} does not exist.`
+      })
+    }
+
+    return res.status(httpStatusCodes.OK).json({
+      message: MESSAGE.OK,
+      payload: accountInstance
+    })
+  }
+  catch (err) {
+    debug.error(NAMESPACE, 'Error occured while finding account by id', err)
+    return res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json({
+      message: MESSAGE.INTERNAL_SERVER_ERROR
+    })
+  }
+}

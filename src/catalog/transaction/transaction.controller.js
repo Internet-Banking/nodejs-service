@@ -12,6 +12,12 @@ export const createInnerTransaction = async (req, res, next) => {
     const {sendingAccountId, receivingAccountId, amount, feePayer, content} = req.body
     const {id} = req.user
 
+    if (sendingAccountId === receivingAccountId) {
+      return res.status(httpStatusCodes.BAD_REQUEST).json({
+        message: 'Sending account and receiving account must not be the same.'
+      })
+    }
+
     const sendingAccount = await accountService.findAccountById(sendingAccountId)
     if (!sendingAccount) {
       return res.status(httpStatusCodes.BAD_REQUEST).json({

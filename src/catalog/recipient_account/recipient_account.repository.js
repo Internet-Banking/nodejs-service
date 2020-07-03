@@ -9,7 +9,7 @@ export const findRecipientAccountById = async (recId, raw = true) => {
 }
 
 export const findRecipientAccountOfUserByAccountId = async (userId, accountId, raw = true) => {
-  return await Models.RecipientAccounts.findOne({where: {userId, accountId}, raw})
+  return await Models.RecipientAccounts.findOne({where: {userId, accountId, isDeleted: false}, raw})
 }
 
 export const createRecipientAccount = async (userId, accountId, nickname) => {
