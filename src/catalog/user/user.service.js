@@ -50,3 +50,7 @@ export const authenticateUser = async (username, password) => {
 export const findUserInfoByAccountIdForPartner = async (accountId) => {
   return await userRepo.findUserInfoByAccountIdForPartner(accountId)
 }
+
+export const findUserByAccountId = async (accountId) => {
+  return await userRepo.findUserByAccountId(accountId)
+}

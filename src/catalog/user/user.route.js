@@ -1,6 +1,7 @@
 import express from 'express'
 import * as userController from './user.controller'
 import * as recipientAccountController from '../recipient_account/recipient_account.controller'
+import * as debtReminder from '../debt_reminder/debt_reminder.controller'
 import {auth, requestValidation} from '../../middlewares'
 
 const router = express.Router()
@@ -26,5 +27,14 @@ router.post('/verify_otp', auth.user(), requestValidation.OTPVerification(), (re
     payload: req.user
   })
 })
+
+//this route use for user create debt reminder
+router.post('/debt_reminder', auth.user(), debtReminder.createDebtReminder)
+
+//this route use for user create debt reminder
+router.get('/debt_reminder_sent', auth.user(), debtReminder.getListOfDebtReminderUserSent)
+
+//this route use for user create debt reminder
+router.get('/debt_reminder_recive', auth.user(), debtReminder.getListOfDebtReminderUserRecive)
 
 export default router
