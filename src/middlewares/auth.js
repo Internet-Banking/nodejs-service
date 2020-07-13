@@ -34,7 +34,7 @@ const admin = () => {
       next()
     }
     catch (err) {
-      debug.error('Auth', 'Error occured while logging admin in', err)
+      debug.error('Auth middlewares', 'Error occured while logging admin in', err)
       return res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json({
         message: MESSAGE.INTERNAL_SERVER_ERROR
       })
@@ -69,7 +69,7 @@ const employee = () => {
       next()
     }
     catch (err) {
-      debug.error('Auth', 'Error occured while logging employee in', err)
+      debug.error('Auth middlewares', 'Error occured while logging employee in', err)
       return res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json({
         message: MESSAGE.INTERNAL_SERVER_ERROR
       })
@@ -105,7 +105,7 @@ const user = () => {
       next()
     }
     catch (err) {
-      debug.error('Auth', 'Error occured while logging user in', err)
+      debug.error('Auth middlewares', 'Error occured while logging user in', err)
       return res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json({
         message: MESSAGE.INTERNAL_SERVER_ERROR
       })

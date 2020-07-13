@@ -11,7 +11,7 @@ export const DB_NAME = process.env.DB_NAME || 'internetBanking'
 
 export const CUSTOMER_FRONTEND_URL = process.env.CUSTOMER_FRONTEND_URL || 'http://localhost:3001'
 export const EMPLOYEE_FRONTEND_URL = process.env.EMPLOYEE_FRONTEND_URL || 'http://localhost:3002'
-export const ADMIN_FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:3003'
+export const ADMIN_FRONTEND_URL = process.env.ADMIN_FRONTEND_URL || 'http://localhost:3003'
 
 export const SALT_ROUNDS = process.env.SALT_ROUNDS
 export const JWT_SECRET = process.env.JWT_SECRET || 'dont let them know'
@@ -32,8 +32,14 @@ export const PGP_PUBLIC_KEY = process.env.PGP_PUBLIC_KEY.replace(/\\n/g, '\n')
 export const HASH_SECRET = process.env.HASH_SECRET
 
 //partners gave us
-export const RSA_PARTNER_PUBLIC_KEY = process.env.RSA_PARTNER_PUBLIC_KEY.replace(/\\n/g, '\n')
+export const PGP_PARTNER_URL = process.env.PGP_PARTNER_URL
+export const PGP_PARTNER_BASIC_AUTH_USERNAME = process.env.PGP_PARTNER_BASIC_AUTH_USERNAME
+export const PGP_PARTNER_BASIC_AUTH_PASSWORD = process.env.PGP_PARTNER_BASIC_AUTH_PASSWORD
+export const PGP_PARTNER_HASH_SECRET = process.env.PGP_PARTNER_HASH_SECRET
 export const PGP_PARTNER_PUBLIC_KEY = process.env.PGP_PARTNER_PUBLIC_KEY.replace(/\\n/g, '\n')
+
+export const RSA_PARTNER_SECRET_CODE = process.env.RSA_PARTNER_SECRET_CODE
+export const RSA_PARTNER_PUBLIC_KEY = process.env.RSA_PARTNER_PUBLIC_KEY.replace(/\\n/g, '\n')
 
 //partnerCode in partner's request
 export const PARTNER_CODE_RSA = process.env.PARTNER_CODE_RSA

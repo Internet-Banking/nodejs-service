@@ -1,5 +1,6 @@
 import express from 'express'
 import * as userController from './user.controller'
+import * as accountController from '../account/account.controller'
 import * as recipientAccountController from '../recipient_account/recipient_account.controller'
 import {auth, requestValidation} from '../../middlewares'
 
@@ -13,6 +14,8 @@ router.get('/:id/account', auth.employee(), userController.findAllAccountsOfUser
 router.get('/me', auth.user(), userController.getUserBasicInfo)
 router.put('/password', auth.user(), userController.changePassword)
 router.put('/forgot_password', requestValidation.OTPVerificationWithoutAuth(), userController.changePassword)
+
+router.get('/account', auth.user(), accountController.findAllAccountsOfUser)
 
 router.get('/recipient_account', auth.user(), recipientAccountController.findAllRecipientAccountsOfUser)
 router.post('/recipient_account', auth.user(), recipientAccountController.createRecipientAccount)
