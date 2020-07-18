@@ -37,4 +37,7 @@ router.get('/debt_reminder_sent', auth.user(), debtReminder.getListOfDebtReminde
 //this route use for user create debt reminder
 router.get('/debt_reminder_recive', auth.user(), debtReminder.getListOfDebtReminderUserRecive)
 
+//this route use for user delete debt reminder
+router.delete('/debt_reminder', auth.user(), debtReminder.deleteDebtReminderById)
+
 export default router

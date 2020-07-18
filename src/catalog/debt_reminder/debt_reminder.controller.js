@@ -72,3 +72,29 @@ export const getListOfDebtReminderUserRecive = async (req, res, next) => {
     })
   }
 }
+
+export const deleteDebtReminderById = async (req, res, next) => {
+  try {
+    const {id} = req.body
+
+    const debtReminderInstance = await debtReminderService.findDebtReminderById(id)
+    if (!debtReminderInstance) {
+      return res.status(httpStatusCodes.BAD_REQUEST).json({
+        message: MESSAGE.INTERNAL_SERVER_ERROR
+      })
+    }
+
+    const debtReminderDeleted = await debtReminderService.deleteDebtReminderById(id)
+
+    return res.status(httpStatusCodes.OK).json({
+      message: MESSAGE.OK,
+      payload: debtReminderDeleted
+    })
+  }
+  catch (err) {
+    debug.error(NAMESPACE, 'Error occured while updating debt reminder', err)
+    return res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json({
+      message: MESSAGE.INTERNAL_SERVER_ERROR
+    })
+  }
+}

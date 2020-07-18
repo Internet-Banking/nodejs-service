@@ -11,3 +11,12 @@ export const getListOfDebtReminderUserSent = async (userId) => {
 export const getListOfDebtReminderUserRecive = async (userId) => {
   return await debtReminderRepo.getListOfDebtReminderUserRecive(userId)
 }
+
+export const findDebtReminderById = async (id) => {
+  return await debtReminderRepo.findDebtReminderById(id)
+}
+
+export const deleteDebtReminderById = async (debtReminderId) => {
+  const result = await debtReminderRepo.deleteDebtReminderById(debtReminderId)
+  return result[1][0]
+}

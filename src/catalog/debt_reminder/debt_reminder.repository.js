@@ -11,3 +11,14 @@ export const getListOfDebtReminderUserSent = async (userId, raw = true) => {
 export const getListOfDebtReminderUserRecive = async (userId, raw = true) => {
   return await Models.DebtReminders.findAll({where: {toUserId: userId, isDeleted: false}, raw})
 }
+
+export const findDebtReminderById = async (id, raw = true) => {
+  return await Models.DebtReminders.findOne({where: {id, isDeleted: false}, raw})
+}
+
+export const deleteDebtReminderById = async (debtReminderId, returning = true) => {
+  return await Models.DebtReminders.update(
+    {isDeleted: true},
+    {where: {id: debtReminderId, isDeleted: false}, returning}
+  )
+}
