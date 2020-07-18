@@ -4,6 +4,8 @@ import Admins from './admin'
 import Employees from './employee'
 import AccountCharges from './account_charge'
 import RecipientAccounts from './recipient_account'
+import InnerTransactions from './inner_transactions'
+import PartnerRequestLogs from './partner_request_logs'
 import OTP from './otp'
 import DebtReminders from './debt_reminder'
 
@@ -14,6 +16,8 @@ RecipientAccounts.belongsTo(Users, {foreignKey: 'userId'})
 RecipientAccounts.belongsTo(Accounts, {foreignKey: 'accountId'})
 DebtReminders.belongsTo(Users, {foreignKey: 'fromUserId'})
 DebtReminders.belongsTo(Users, {foreignKey: 'toUserId'})
+InnerTransactions.belongsTo(Accounts, {foreignKey: 'sendingAccountId'})
+InnerTransactions.belongsTo(Accounts, {foreignKey: 'receivingAccountId'})
 
 export default {
   Users,
@@ -22,6 +26,8 @@ export default {
   Employees,
   AccountCharges,
   RecipientAccounts,
-  OTP,
-  DebtReminders
+  DebtReminders,
+  InnerTransactions,
+  PartnerRequestLogs,
+  OTP
 }
