@@ -16,9 +16,15 @@ export const findDebtReminderById = async (id, raw = true) => {
   return await Models.DebtReminders.findOne({where: {id, isDeleted: false}, raw})
 }
 
-export const deleteDebtReminderById = async (debtReminderId, returning = true) => {
+export const deleteDebtReminderById = async (id, contentOfRemoveDebt, returning = true) => {
   return await Models.DebtReminders.update(
-    {isDeleted: true},
-    {where: {id: debtReminderId, isDeleted: false}, returning}
+    {
+      isDeleted: true,
+      contentOfRemoveDebt
+    },
+    {
+      where: {id, isDeleted: false},
+      returning
+    }
   )
 }

@@ -37,6 +37,10 @@ module.exports = {
         type: Sequelize.STRING,
         defaultValue: ''
       },
+      isPay: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+      },
       isDeleted: {
         type: Sequelize.BOOLEAN,
         defaultValue: false

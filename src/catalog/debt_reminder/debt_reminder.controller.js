@@ -75,7 +75,7 @@ export const getListOfDebtReminderUserRecive = async (req, res, next) => {
 
 export const deleteDebtReminderById = async (req, res, next) => {
   try {
-    const {id} = req.body
+    const {id, contentOfRemoveDebt} = req.body
 
     const debtReminderInstance = await debtReminderService.findDebtReminderById(id)
     if (!debtReminderInstance) {
@@ -84,7 +84,7 @@ export const deleteDebtReminderById = async (req, res, next) => {
       })
     }
 
-    const debtReminderDeleted = await debtReminderService.deleteDebtReminderById(id)
+    const debtReminderDeleted = await debtReminderService.deleteDebtReminderById(id, contentOfRemoveDebt)
 
     return res.status(httpStatusCodes.OK).json({
       message: MESSAGE.OK,

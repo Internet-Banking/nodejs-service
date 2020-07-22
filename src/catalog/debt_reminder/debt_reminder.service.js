@@ -16,7 +16,7 @@ export const findDebtReminderById = async (id) => {
   return await debtReminderRepo.findDebtReminderById(id)
 }
 
-export const deleteDebtReminderById = async (debtReminderId) => {
-  const result = await debtReminderRepo.deleteDebtReminderById(debtReminderId)
+export const deleteDebtReminderById = async (id, contentOfRemoveDebt) => {
+  const result = await debtReminderRepo.deleteDebtReminderById(id, contentOfRemoveDebt)
   return result[1][0]
 }

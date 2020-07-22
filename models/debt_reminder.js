@@ -36,6 +36,10 @@ const DebtReminders = sequelize.define('debt_reminders', {
     type: Sequelize.STRING,
     defaultValue: ''
   },
+  isPay: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  },
   isDeleted: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
