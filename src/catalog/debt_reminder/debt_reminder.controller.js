@@ -112,11 +112,17 @@ export const payForDebtReminderById = async (req, res, next) => {
       content,
       feePayer
     )
-    
-    delete receivingAccount.balance //do not show balance to sender
+
+    await debtReminderService.setDebtReminderIsPayById(debtReminderId)
+  
     return res.status(httpStatusCodes.OK).json({
       message: MESSAGE.OK,
-      receivingAccount
+      payload: {
+        debtReminderId,
+        sendingAccountId: sendingAccount.id,
+        receivingAccountId: receivingAccount.id,
+        amount: debtReminderInstance.debtAmount
+      }
     })
   }
   catch (err) {
