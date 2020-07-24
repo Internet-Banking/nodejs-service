@@ -85,10 +85,10 @@ export const payForDebtReminderById = async (req, res, next) => {
       })
     }
 
-    const sendingAccount = await accountService.findPaymentAccountsByUserId(debtReminderInstance.fromUserId)
+    const sendingAccount = await accountService.findPaymentAccountsByUserId(debtReminderInstance.toUserId)
     if (!sendingAccount) {
       return res.status(httpStatusCodes.BAD_REQUEST).json({
-        message: `Sending account with id ${debtReminderInstance.fromUserId} does not exist.`
+        message: `Sending account with id ${debtReminderInstance.toUserId} does not exist.`
       })
     }
 
@@ -98,10 +98,10 @@ export const payForDebtReminderById = async (req, res, next) => {
       })
     }
 
-    const receivingAccount = await accountService.findPaymentAccountsByUserId(debtReminderInstance.toUserId)
+    const receivingAccount = await accountService.findPaymentAccountsByUserId(debtReminderInstance.fromUserId)
     if (!receivingAccount) {
       return res.status(httpStatusCodes.BAD_REQUEST).json({
-        message: `Receiving account with id ${debtReminderInstance.toUserId} does not exist.`
+        message: `Receiving account with id ${debtReminderInstance.fromUserId} does not exist.`
       })
     }
 
