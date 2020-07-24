@@ -2,7 +2,7 @@ import express from 'express'
 import * as userController from './user.controller'
 import * as accountController from '../account/account.controller'
 import * as recipientAccountController from '../recipient_account/recipient_account.controller'
-import * as debtReminder from '../debt_reminder/debt_reminder.controller'
+import * as debtReminderController from '../debt_reminder/debt_reminder.controller'
 import {auth, requestValidation} from '../../middlewares'
 
 const router = express.Router()
@@ -38,16 +38,16 @@ router.post('/verify_otp', auth.user(), requestValidation.OTPVerification(), (re
 })
 
 //this route use for user create debt reminder
-router.post('/debt_reminder', auth.user(), debtReminder.createDebtReminder)
+router.post('/debt_reminder', auth.user(), debtReminderController.createDebtReminder)
 
 //this route use for user create debt reminder
-router.get('/debt_reminder_sent', auth.user(), debtReminder.getListOfDebtReminderUserSent)
+router.get('/debt_reminder_sent', auth.user(), debtReminderController.getListOfDebtReminderUserSent)
 
 //this route use for user create debt reminder
-router.get('/debt_reminder_recive', auth.user(), debtReminder.getListOfDebtReminderUserRecive)
+router.get('/debt_reminder_recive', auth.user(), debtReminderController.getListOfDebtReminderUserRecive)
 
 //this route use for user delete debt reminder
-router.delete('/debt_reminder', auth.user(), debtReminder.deleteDebtReminderById)
+router.delete('/debt_reminder', auth.user(), debtReminderController.deleteDebtReminderById)
 //this route use to test middlewares verify OTP without auth
 router.post('/verify_otp_without_auth', requestValidation.OTPVerificationWithoutAuth(), (req, res) => {
   return res.status(200).json({
