@@ -40,11 +40,17 @@ router.post('/verify_otp', auth.user(), requestValidation.OTPVerification(), (re
 //this route use for user create debt reminder
 router.post('/debt_reminder', auth.user(), debtReminderController.createDebtReminder)
 
-//this route use for user create debt reminder
+//this route use for user get debtReminder list they sent
 router.get('/debt_reminder_sent', auth.user(), debtReminderController.getListOfDebtReminderUserSent)
 
-//this route use for user create debt reminder
+//this route use for user get debtReminder list they recive
 router.get('/debt_reminder_recive', auth.user(), debtReminderController.getListOfDebtReminderUserRecive)
+
+//this route use for user pay for debtReminder
+router.post('/debt_reminder_pay',
+  auth.user(),
+  //requestValidation.OTPVerification(),
+  debtReminderController.payForDebtReminderById)
 
 //this route use for user delete debt reminder
 router.delete('/debt_reminder', auth.user(), debtReminderController.deleteDebtReminderById)

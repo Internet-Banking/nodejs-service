@@ -1,5 +1,6 @@
 import * as debtReminderService from './debt_reminder.service'
 import * as accountService from '../account/account.service'
+import * as transactionService from '../transaction/transaction.service'
 import httpStatusCodes from 'http-status-codes'
 import moment from 'moment'
 import {debug} from '../../utils'
@@ -67,6 +68,59 @@ export const getListOfDebtReminderUserRecive = async (req, res, next) => {
   }
   catch (err) {
     debug.error(NAMESPACE, 'Error occured while getting recive debt reminder list.', err)
+    return res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json({
+      message: MESSAGE.INTERNAL_SERVER_ERROR
+    })
+  }
+}
+
+export const payForDebtReminderById = async (req, res, next) => {
+  try {
+    const {debtReminderId, content, feePayer} = req.body
+
+    const debtReminderInstance = await debtReminderService.findDebtReminderById(debtReminderId)
+    if (!debtReminderInstance) {
+      return res.status(httpStatusCodes.BAD_REQUEST).json({
+        message: `DebtReminder with id ${debtReminderId} does not exist.`
+      })
+    }
+
+    const sendingAccount = await accountService.findPaymentAccountsByUserId(debtReminderInstance.fromUserId)
+    if (!sendingAccount) {
+      return res.status(httpStatusCodes.BAD_REQUEST).json({
+        message: `Sending account with id ${debtReminderInstance.fromUserId} does not exist.`
+      })
+    }
+
+    if (sendingAccount.balance < debtReminderInstance.debtAmount) {
+      return res.status(httpStatusCodes.BAD_REQUEST).json({
+        message: 'Sending account does not have enough money.'
+      })
+    }
+
+    const receivingAccount = await accountService.findPaymentAccountsByUserId(debtReminderInstance.toUserId)
+    if (!receivingAccount) {
+      return res.status(httpStatusCodes.BAD_REQUEST).json({
+        message: `Receiving account with id ${debtReminderInstance.toUserId} does not exist.`
+      })
+    }
+
+    await transactionService.createInnerTransactions(
+      sendingAccount.id,
+      receivingAccount.id,
+      debtReminderInstance.debtAmount,
+      content,
+      feePayer
+    )
+    
+    delete receivingAccount.balance //do not show balance to sender
+    return res.status(httpStatusCodes.OK).json({
+      message: MESSAGE.OK,
+      receivingAccount
+    })
+  }
+  catch (err) {
+    debug.error(NAMESPACE, 'Error occured while paying for debt reminder', err)
     return res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json({
       message: MESSAGE.INTERNAL_SERVER_ERROR
     })
