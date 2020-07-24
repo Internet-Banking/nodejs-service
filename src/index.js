@@ -5,6 +5,7 @@ import {PORT} from './config'
 import {debug} from './utils'
 
 const server = http.createServer(app)
+
 const NAMESPACE = `APP-${moment.utc().toISOString()}`
 // eslint-disable-next-line max-len
 server.listen(PORT, async () => {

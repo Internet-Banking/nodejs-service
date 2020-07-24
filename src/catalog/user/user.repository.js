@@ -68,6 +68,29 @@ export const findUserInfoByAccountIdForPartner = async (accountId, raw = true) =
   })
 }
 
+export const findUserByAccountId = async (accountId, raw = true) => {
+  return await Models.Accounts.findOne({
+    attributes: [
+      'id',
+      [Sequelize.col('user.name'), 'userName'],
+      [Sequelize.col('user.email'), 'userEmail'],
+      [Sequelize.col('user.phone'), 'userPhone']
+    ],
+    where: {
+      id: accountId,
+      isDeleted: false
+    },
+    include: [
+      {
+        model: Models.Users,
+        required: true,
+        attributes: ['name', 'email', 'phone']
+      }
+    ],
+    raw
+  })
+}
+
 export const createUser = async (email, name, username, phone, password) => {
   return await Models.Users.create({email, name, username, phone, password})
 }

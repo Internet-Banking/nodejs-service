@@ -1,13 +1,15 @@
 'use strict';
+
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('accounts', {
+    return queryInterface.createTable('debt_reminders', {
       id: {
         allowNull: false,
+        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER
       },
-      userId: {
+      fromUserId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -15,14 +17,29 @@ module.exports = {
           key: 'id'
         }
       },
-      balance: {
-        type: Sequelize.BIGINT,
-        defaultValue: 0
+      toUserId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'users',
+          key: 'id'
+        }
       },
-      type: {
-        type: Sequelize.ENUM(['SAVING', 'PAYMENT']),
-        defaultValue: 'PAYMENT',
+      debtAmount: {
+        type: Sequelize.BIGINT,
         allowNull: false
+      },
+      contentOfDebt: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      contentOfRemoveDebt: {
+        type: Sequelize.STRING,
+        defaultValue: ''
+      },
+      isPay: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
       },
       isDeleted: {
         type: Sequelize.BOOLEAN,
@@ -38,7 +55,8 @@ module.exports = {
       }
     });
   },
+
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('accounts');
+    return queryInterface.dropTable('debt_reminders');
   }
 };
