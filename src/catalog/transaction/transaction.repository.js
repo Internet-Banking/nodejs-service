@@ -28,3 +28,19 @@ export const createInnerTransactions = async (sendingAccountId, receivingAccount
     }, {transaction: t})
   })
 }
+
+export const createPartnerReponseLogAndDecreaseAccountBalance = async (
+  partnerCode, responseData, sendingAccountId, amount
+) => {
+  await sequelize.transaction(async (t) => {
+    await Models.Accounts.decrement(['balance'], {
+      by: +amount,
+      where: {id: sendingAccountId, isDeleted: false}
+    }, {transaction: t})
+
+    await Models.PartnerResponseLogs.create({
+      partnerCode,
+      responseData: JSON.stringify(responseData)
+    }, {transaction: t})
+  })
+}

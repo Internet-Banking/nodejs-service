@@ -25,6 +25,7 @@ export const OTP_MAIL_SUBJECT = '[INTERNET_BANKING_29 - OTP]'
 //used to sign in request sent to partner
 export const RSA_PRIVATE_KEY = process.env.RSA_PRIVATE_KEY.replace(/\\n/g, '\n')
 export const PGP_PRIVATE_KEY = process.env.PGP_PRIVATE_KEY.replace(/\\n/g, '\n')
+export const PGP_KEY_PASSPHRASE = process.env.PGP_KEY_PASSPHRASE
 
 //send this to partners
 export const RSA_PUBLIC_KEY = process.env.RSA_PUBLIC_KEY.replace(/\\n/g, '\n')
@@ -32,12 +33,13 @@ export const PGP_PUBLIC_KEY = process.env.PGP_PUBLIC_KEY.replace(/\\n/g, '\n')
 export const HASH_SECRET = process.env.HASH_SECRET
 
 //partners gave us
-export const PGP_PARTNER_URL = process.env.PGP_PARTNER_URL
+export const PGP_PARTNER_URL = 'https://beohoang98-bank-dev.herokuapp.com'
 export const PGP_PARTNER_BASIC_AUTH_USERNAME = process.env.PGP_PARTNER_BASIC_AUTH_USERNAME
 export const PGP_PARTNER_BASIC_AUTH_PASSWORD = process.env.PGP_PARTNER_BASIC_AUTH_PASSWORD
 export const PGP_PARTNER_HASH_SECRET = process.env.PGP_PARTNER_HASH_SECRET
 export const PGP_PARTNER_PUBLIC_KEY = process.env.PGP_PARTNER_PUBLIC_KEY.replace(/\\n/g, '\n')
 
+export const RSA_PARTNER_URL = 'https://sacombank-internet-banking.herokuapp.com'
 export const RSA_PARTNER_SECRET_CODE = process.env.RSA_PARTNER_SECRET_CODE
 export const RSA_PARTNER_PUBLIC_KEY = process.env.RSA_PARTNER_PUBLIC_KEY.replace(/\\n/g, '\n')
 

@@ -18,6 +18,11 @@ export const TRANSACTION_FEE_PAYER = keyMirror({
   RECEIVER: null
 })
 
+export const PARTNER_BANK_NAMES = {
+  RSA: 'Sacombank',
+  PGP: 'Nhom28Bank'
+}
+
 export const HTTP_METHOD = keyMirror({
   GET: null,
   POST: null,

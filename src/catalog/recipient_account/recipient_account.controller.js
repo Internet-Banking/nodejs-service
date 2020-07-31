@@ -106,7 +106,7 @@ export const deleteRecipientAccountById = async (req, res, next) => {
     })
   }
   catch (err) {
-    debug.error(NAMESPACE, 'Error occured while updating recipient account', err)
+    debug.error(NAMESPACE, 'Error occured while deleting recipient account', err)
     return res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json({
       message: MESSAGE.INTERNAL_SERVER_ERROR
     })

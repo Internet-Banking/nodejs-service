@@ -6,6 +6,7 @@ import AccountCharges from './account_charge'
 import RecipientAccounts from './recipient_account'
 import InnerTransactions from './inner_transactions'
 import PartnerRequestLogs from './partner_request_logs'
+import PartnerResponseLogs from './partner_response_logs'
 import OTP from './otp'
 
 Users.hasMany(Accounts, {foreignKey: 'userId'})
@@ -25,5 +26,6 @@ export default {
   RecipientAccounts,
   InnerTransactions,
   PartnerRequestLogs,
+  PartnerResponseLogs,
   OTP
 }

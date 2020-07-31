@@ -4,7 +4,6 @@ const sgMail = require('@sendgrid/mail');
 const dotenv = require('dotenv')
 dotenv.config()
 const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY
-// console.log(`sendgrid:`, SENDGRID_API_KEY);
 sgMail.setApiKey(`${SENDGRID_API_KEY}`);
 
 const msg = {
@@ -15,7 +14,4 @@ const msg = {
   html: '<strong>Your OTP: 773023</strong>'
 };
 
-sgMail
-  .send(msg)
-  // .then((res) => {console.log(res)})
-  // .catch(err => console.log(err))
+sgMail.send(msg)
