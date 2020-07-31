@@ -29,6 +29,7 @@ const getAccountInfo = async (accountNumber) => {
     }
 
     const response = await axios.post(`${PGP_PARTNER_URL}/api/partner/check-account`, body, {auth, headers})
+
     return {isSuccess: true, data: response.data}
   }
   catch (error) {

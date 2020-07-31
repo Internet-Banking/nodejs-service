@@ -7,13 +7,18 @@ import RecipientAccounts from './recipient_account'
 import InnerTransactions from './inner_transactions'
 import PartnerRequestLogs from './partner_request_logs'
 import PartnerResponseLogs from './partner_response_logs'
+import OuterRecipientAccounts from './outer_recipient_accounts'
 import OTP from './otp'
 
 Users.hasMany(Accounts, {foreignKey: 'userId'})
 Accounts.belongsTo(Users, {foreignKey: 'userId'})
+
 AccountCharges.belongsTo(Accounts, {foreignKey: 'accountId'})
+
 RecipientAccounts.belongsTo(Users, {foreignKey: 'userId'})
 RecipientAccounts.belongsTo(Accounts, {foreignKey: 'accountId'})
+OuterRecipientAccounts.belongsTo(Users, {foreignKey: 'userId'})
+
 InnerTransactions.belongsTo(Accounts, {foreignKey: 'sendingAccountId'})
 InnerTransactions.belongsTo(Accounts, {foreignKey: 'receivingAccountId'})
 
@@ -24,6 +29,7 @@ export default {
   Employees,
   AccountCharges,
   RecipientAccounts,
+  OuterRecipientAccounts,
   InnerTransactions,
   PartnerRequestLogs,
   PartnerResponseLogs,

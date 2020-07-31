@@ -2,6 +2,7 @@ import express from 'express'
 import * as userController from './user.controller'
 import * as accountController from '../account/account.controller'
 import * as recipientAccountController from '../recipient_account/recipient_account.controller'
+import * as outerRecipientAccountController from '../outer_recipient_account/outer_recipient_account.controller'
 import {auth, requestValidation} from '../../middlewares'
 
 const router = express.Router()
@@ -21,6 +22,9 @@ router.get('/recipient_account', auth.user(), recipientAccountController.findAll
 router.post('/recipient_account', auth.user(), recipientAccountController.createRecipientAccount)
 router.put('/recipient_account/:id', auth.user(), recipientAccountController.updateRecipientAccountById)
 router.delete('/recipient_account/:id', auth.user(), recipientAccountController.deleteRecipientAccountById)
+
+router.get('/outer_recipient_account', auth.user(), outerRecipientAccountController.findAllOuterRecipientAccountsOfUser)
+router.post('/outer_recipient_account', auth.user(), outerRecipientAccountController.createOuterRecipientAccount)
 
 //this route use to generate and send OTP to user email after auth
 router.post('/otp', auth.user(), userController.generateAndSendOTP)
