@@ -11,11 +11,11 @@ router.post('/inner',
 
 router.post('/outer/pgp',
   auth.user(),
-  requestValidation.OTPVerification(),
+  //requestValidation.OTPVerification(),
   transactionController.createOuterTransactionToPGPPartner)
 
 router.post('/outer/rsa',
   auth.user(),
-  requestValidation.OTPVerification(),
+  //requestValidation.OTPVerification(),
   transactionController.createOuterTransactionToRSAPartner)
 export default router

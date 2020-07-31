@@ -8,7 +8,7 @@ const PartnerResponseLogs = sequelize.define('partner_response_logs', {
     primaryKey: true,
     type: Sequelize.INTEGER
   },
-  partnerCode: {
+  bankName: {
     allowNull: false,
     type: Sequelize.STRING
   },

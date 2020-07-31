@@ -35,9 +35,9 @@ const getAccountInfo = async (accountNumber) => {
   }
 }
 
-const transfer = async (sendingAccountId, receivingAccountId, amount) => {
+const transfer = async (sendingAccountId, receivingAccountId, amount, message) => {
   try {
-    const body = {numberReceiver: receivingAccountId, numberSender: sendingAccountId, amount, message: 'IBanking29'}
+    const body = {numberReceiver: receivingAccountId, numberSender: sendingAccountId, amount, message}
     const requestBody = {
       message: rsaPartnerPublicKey.encrypt(body, 'base64'),
       signature: bankRSAPrivateKey.sign(body, 'base64')
@@ -51,7 +51,6 @@ const transfer = async (sendingAccountId, receivingAccountId, amount) => {
 
     const response = await axios.post(`${RSA_PARTNER_URL}/services/accounts/transfer/`, requestBody, {headers})
     const parsedResponse = await JSON.parse(bankRSAPrivateKey.decrypt(response.data.messageResponse, 'utf8'))
-
     if (!parsedResponse.success) {
       return {isSuccess: false, error: parsedResponse.message}
     }

@@ -8,7 +8,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      partnerCode: {
+      bankName: {
         allowNull: false,
         type: Sequelize.STRING
       },

@@ -37,9 +37,9 @@ const getAccountInfo = async (accountNumber) => {
   }
 }
 
-const transfer = async (accountNumber, amount) => {
+const transfer = async (accountNumber, amount, message) => {
   try {
-    const sendData = {accountNumber: +accountNumber, amount}
+    const sendData = {accountNumber: +accountNumber, amount, message}
     const {keys: [privateKey]} = await openPGP.key.readArmored(PGP_PRIVATE_KEY)
     await privateKey.decrypt(PGP_KEY_PASSPHRASE)
     const {signature} = await openPGP.sign({

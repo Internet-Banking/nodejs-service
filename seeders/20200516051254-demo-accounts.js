@@ -6,7 +6,7 @@ module.exports = {
     return queryInterface.bulkInsert('accounts', [{
       id: accountIdSeeds[0],
       userId: 1,
-      balance: 0,
+      balance: 10000000,
       type: 'PAYMENT',
       isDeleted: false,
       createdAt: new Date(),

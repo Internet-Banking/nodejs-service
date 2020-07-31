@@ -69,7 +69,7 @@ export const createInnerTransaction = async (req, res, next) => {
 
 export const createOuterTransactionToPGPPartner = async (req, res, next) => {
   try {
-    const {sendingAccountId, receivingAccountId, amount, feePayer} = req.body
+    const {sendingAccountId, receivingAccountId, amount, feePayer, content} = req.body
     const {id} = req.user
     
     const sendingAccount = await accountService.findAccountById(sendingAccountId)
@@ -104,7 +104,14 @@ export const createOuterTransactionToPGPPartner = async (req, res, next) => {
       })
     }
 
-    const result = await transactionService.transferToPGPPartner(sendingAccountId, receivingAccountId, amount, feePayer)
+    const result = await transactionService.transferToPGPPartner(
+      sendingAccountId,
+      receivingAccountId,
+      amount,
+      feePayer,
+      content
+    )
+
     if (!result.isSuccess) {
       return res.status(httpStatusCodes.OK).json({
         message: result.error.message
@@ -125,7 +132,7 @@ export const createOuterTransactionToPGPPartner = async (req, res, next) => {
 
 export const createOuterTransactionToRSAPartner = async (req, res, next) => {
   try {
-    const {sendingAccountId, receivingAccountId, amount, feePayer} = req.body
+    const {sendingAccountId, receivingAccountId, amount, feePayer, content} = req.body
     const {id} = req.user
     
     const sendingAccount = await accountService.findAccountById(sendingAccountId)
@@ -160,7 +167,14 @@ export const createOuterTransactionToRSAPartner = async (req, res, next) => {
       })
     }
 
-    const result = await transactionService.transferToRSAPartner(sendingAccountId, receivingAccountId, amount, feePayer)
+    const result = await transactionService.transferToRSAPartner(
+      sendingAccountId,
+      receivingAccountId,
+      amount,
+      feePayer,
+      content
+    )
+    
     if (!result.isSuccess) {
       return res.status(httpStatusCodes.BAD_REQUEST).json({
         message: 'Request failed, please check your input.'
