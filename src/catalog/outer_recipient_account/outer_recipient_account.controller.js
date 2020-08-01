@@ -7,11 +7,12 @@ import {pgpPartnerFetcher, rsaPartnerFetcher} from '../../fetches'
 
 const NAMESPACE = `OuterRecipientAccountController-${moment.utc().toISOString()}`
 
-export const findAllOuterRecipientAccountsOfUser = async (req, res, next) => {
+export const findAllOuterRecipientAccountsOfUserInPGPPartner = async (req, res, next) => {
   try {
     const {id} = req.user
     
-    const outerRecipientAccountList = await outerRecipientAccountService.findAllOuterRecipientAccountsOfUser(id)
+    const outerRecipientAccountList =
+      await outerRecipientAccountService.findAllOuterRecipientAccountsOfUserInPGPPartner(id)
 
     return res.status(httpStatusCodes.OK).json({
       message: MESSAGE.OK,
@@ -19,7 +20,27 @@ export const findAllOuterRecipientAccountsOfUser = async (req, res, next) => {
     })
   }
   catch (err) {
-    debug.error(NAMESPACE, 'Error occured while finding all outer recipient accounts of user', err)
+    debug.error(NAMESPACE, 'Error occured while finding all outer recipient accounts of user in pgp partner', err)
+    return res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json({
+      message: MESSAGE.INTERNAL_SERVER_ERROR
+    })
+  }
+}
+
+export const findAllOuterRecipientAccountsOfUserInRSAPartner = async (req, res, next) => {
+  try {
+    const {id} = req.user
+    
+    const outerRecipientAccountList =
+      await outerRecipientAccountService.findAllOuterRecipientAccountsOfUserInRSAPartner(id)
+
+    return res.status(httpStatusCodes.OK).json({
+      message: MESSAGE.OK,
+      payload: outerRecipientAccountList
+    })
+  }
+  catch (err) {
+    debug.error(NAMESPACE, 'Error occured while finding all outer recipient accounts of user in rsa partner', err)
     return res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json({
       message: MESSAGE.INTERNAL_SERVER_ERROR
     })

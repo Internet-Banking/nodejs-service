@@ -34,7 +34,7 @@ export const createOuterTransaction = async (
 ) => {
   await sequelize.transaction(async (t) => {
     await Models.Accounts.decrement(['balance'], {
-      by: +amount,
+      by: parseInt(amount),
       where: {id: sendingAccountId, isDeleted: false}
     }, {transaction: t})
 

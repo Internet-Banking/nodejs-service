@@ -1,5 +1,5 @@
 import * as accountService from '../account/account.service'
-import {MESSAGE, ACCOUNT_TYPES} from '../../constants'
+import {MESSAGE, ACCOUNT_TYPES, PARTNER_BANK_NAMES} from '../../constants'
 import {debug} from '../../utils'
 import httpStatusCodes from 'http-status-codes'
 import moment from 'moment'
@@ -100,14 +100,14 @@ export const createOuterTransactionToPGPPartner = async (req, res, next) => {
     const response = await pgpPartnerFetcher.getAccountInfo(receivingAccountId)
     if (!response.isSuccess) {
       return res.status(httpStatusCodes.BAD_REQUEST).json({
-        message: 'Receiving account does not exist.'
+        message: `Receiving account does not exist in ${PARTNER_BANK_NAMES.PGP}`
       })
     }
 
     const result = await transactionService.transferToPGPPartner(
       sendingAccountId,
       receivingAccountId,
-      amount,
+      +amount,
       feePayer,
       content
     )
@@ -163,14 +163,14 @@ export const createOuterTransactionToRSAPartner = async (req, res, next) => {
     const response = await rsaPartnerFetcher.getAccountInfo(receivingAccountId)
     if (!response.isSuccess) {
       return res.status(httpStatusCodes.BAD_REQUEST).json({
-        message: 'Receiving account does not exist.'
+        message: `Receiving account does not exist in ${PARTNER_BANK_NAMES.RSA}`
       })
     }
 
     const result = await transactionService.transferToRSAPartner(
       sendingAccountId,
       receivingAccountId,
-      amount,
+      +amount,
       feePayer,
       content
     )

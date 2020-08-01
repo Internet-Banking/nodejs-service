@@ -1,7 +1,18 @@
 import Models from '../../../models/all'
+import {PARTNER_BANK_NAMES} from '../../constants'
 
-export const findAllOuterRecipientAccountsOfUser = async (userId, raw = true) => {
-  return await Models.OuterRecipientAccounts.findAll({where: {userId, isDeleted: false}, raw})
+export const findAllOuterRecipientAccountsOfUserInPGPPartner = async (userId, raw = true) => {
+  return await Models.OuterRecipientAccounts.findAll({
+    where: {userId, bankName: PARTNER_BANK_NAMES.PGP, isDeleted: false},
+    raw
+  })
+}
+
+export const findAllOuterRecipientAccountsOfUserInRSAPartner = async (userId, raw = true) => {
+  return await Models.OuterRecipientAccounts.findAll({
+    where: {userId, bankName: PARTNER_BANK_NAMES.RSA, isDeleted: false},
+    raw
+  })
 }
 
 export const findOuterRecipientAccountById = async (recId, raw = true) => {

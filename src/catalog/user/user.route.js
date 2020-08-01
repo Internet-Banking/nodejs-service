@@ -23,7 +23,12 @@ router.post('/recipient_account', auth.user(), recipientAccountController.create
 router.put('/recipient_account/:id', auth.user(), recipientAccountController.updateRecipientAccountById)
 router.delete('/recipient_account/:id', auth.user(), recipientAccountController.deleteRecipientAccountById)
 
-router.get('/outer_recipient_account', auth.user(), outerRecipientAccountController.findAllOuterRecipientAccountsOfUser)
+router.get('/outer_recipient_account/pgp',
+  auth.user(),
+  outerRecipientAccountController.findAllOuterRecipientAccountsOfUserInPGPPartner)
+router.get('/outer_recipient_account/rsa',
+  auth.user(),
+  outerRecipientAccountController.findAllOuterRecipientAccountsOfUserInRSAPartner)
 router.post('/outer_recipient_account', auth.user(), outerRecipientAccountController.createOuterRecipientAccount)
 
 //this route use to generate and send OTP to user email after auth

@@ -31,7 +31,7 @@ export const transferToRSAPartner = async (sendingAccountId, receivingAccountId,
   const result = await rsaPartnerFetcher.transfer(
     sendingAccountId,
     receivingAccountId,
-    feePayer === TRANSACTION_FEE_PAYER.RECEIVER ? +amount - TRANSACTION_FEE : +amount,
+    feePayer === TRANSACTION_FEE_PAYER.RECEIVER ? amount - TRANSACTION_FEE : amount,
     content
   )
   if (result.isSuccess) {

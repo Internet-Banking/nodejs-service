@@ -19,7 +19,7 @@ export const findAccountInPGPPartnerByAccountId = async (req, res, next) => {
     }
 
     return res.status(httpStatusCodes.BAD_REQUEST).json({
-      message: 'Request failed, please check your input.'
+      message: `Account does not exist in ${PARTNER_BANK_NAMES.PGP}`
     })
   }
   catch (err) {
@@ -43,7 +43,7 @@ export const findAccountInRSAPartnerByAccountId = async (req, res, next) => {
     }
 
     return res.status(httpStatusCodes.BAD_REQUEST).json({
-      message: 'Request failed, please check your input.'
+      message: `Account does not exist in ${PARTNER_BANK_NAMES.RSA}`
     })
   }
   catch (err) {

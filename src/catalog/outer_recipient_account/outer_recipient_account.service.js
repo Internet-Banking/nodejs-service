@@ -1,7 +1,11 @@
 import * as outerRecipientAccountRepo from './outer_recipient_account.repository'
 
-export const findAllOuterRecipientAccountsOfUser = async (userId) => {
-  return await outerRecipientAccountRepo.findAllOuterRecipientAccountsOfUser(userId)
+export const findAllOuterRecipientAccountsOfUserInPGPPartner = async (userId) => {
+  return await outerRecipientAccountRepo.findAllOuterRecipientAccountsOfUserInPGPPartner(userId)
+}
+
+export const findAllOuterRecipientAccountsOfUserInRSAPartner = async (userId) => {
+  return await outerRecipientAccountRepo.findAllOuterRecipientAccountsOfUserInRSAPartner(userId)
 }
 
 export const findOuterRecipientAccountById = async (recId) => {
