@@ -48,3 +48,11 @@ export const transferToRSAPartner = async (sendingAccountId, receivingAccountId,
 
   return result
 }
+
+export const getInnerTransactionByAccounts = async ({sendingAccountIds, receivingAccountIds}, opt) => {
+  return transactionRepo.getInnerTransactionByAccounts({sendingAccountIds, receivingAccountIds}, opt)
+}
+
+export const getOuterTransactionByAccounts = async ({sendingAccountIds, receivingAccountIds}, opt) => {
+  return transactionRepo.getOuterTransactionByAccounts({sendingAccountIds, receivingAccountIds}, opt)
+}
