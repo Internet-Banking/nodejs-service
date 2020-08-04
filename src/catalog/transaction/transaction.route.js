@@ -9,6 +9,8 @@ router.post('/inner',
   requestValidation.OTPVerification(),
   transactionController.createInnerTransaction)
 
+router.get('/inner', auth.user(), transactionController.getInnerTransactionByUserId)
+
 router.post('/outer/pgp',
   auth.user(),
   requestValidation.OTPVerification(),
@@ -18,4 +20,7 @@ router.post('/outer/rsa',
   auth.user(),
   requestValidation.OTPVerification(),
   transactionController.createOuterTransactionToRSAPartner)
+
+router.get('/outer', auth.user(), transactionController.getOuterTransactionByUserId)
+
 export default router
