@@ -192,3 +192,32 @@ export const createOuterTransactionToRSAPartner = async (req, res, next) => {
     })
   }
 }
+
+export const findAllOuterTransactions = async (req, res, next) => {
+  try {
+    const {bankName, startDate, endDate} = req.query
+    let outerTransactionList = []
+    switch (bankName) {
+      case PARTNER_BANK_NAMES.RSA:
+        outerTransactionList = await transactionService.findAllOuterTransactionsOfRSAPartner(startDate, endDate)
+        break
+      case PARTNER_BANK_NAMES.PGP:
+        outerTransactionList = await transactionService.findAllOuterTransactionsOfPGPPartner(startDate, endDate)
+        break
+      default:
+        outerTransactionList = await transactionService.findAllOuterTransactions(startDate, endDate)
+        break
+    }
+
+    return res.status(httpStatusCodes.OK).json({
+      message: MESSAGE.OK,
+      payload: outerTransactionList
+    })
+  }
+  catch (err) {
+    debug.error(NAMESPACE, 'Error occured while  all outer transactions', err)
+    return res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json({
+      message: MESSAGE.INTERNAL_SERVER_ERROR
+    })
+  }
+}

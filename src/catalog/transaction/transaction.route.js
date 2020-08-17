@@ -18,4 +18,9 @@ router.post('/outer/rsa',
   auth.user(),
   requestValidation.OTPVerification(),
   transactionController.createOuterTransactionToRSAPartner)
+
+router.get('/outer',
+  auth.admin(),
+  transactionController.findAllOuterTransactions)
+
 export default router

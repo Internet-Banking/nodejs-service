@@ -48,3 +48,15 @@ export const transferToRSAPartner = async (sendingAccountId, receivingAccountId,
 
   return result
 }
+
+export const findAllOuterTransactions = async (startDate, endDate) => {
+  return await transactionRepo.findAllOuterTransactions(startDate, endDate)
+}
+
+export const findAllOuterTransactionsOfRSAPartner = async (startDate, endDate) => {
+  return await transactionRepo.findAllOuterTransactionsOfRSAPartner(startDate, endDate)
+}
+
+export const findAllOuterTransactionsOfPGPPartner = async (startDate, endDate) => {
+  return await transactionRepo.findAllOuterTransactionsOfPGPPartner(startDate, endDate)
+}

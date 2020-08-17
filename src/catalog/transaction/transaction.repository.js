@@ -1,6 +1,8 @@
 import Models from '../../../models/all'
 import {sequelize} from '../../db'
-import {TRANSACTION_FEE, TRANSACTION_FEE_PAYER} from '../../constants'
+import {TRANSACTION_FEE, TRANSACTION_FEE_PAYER, PARTNER_BANK_NAMES} from '../../constants'
+import Sequelize from 'sequelize'
+const Op = Sequelize.Op
 
 export const createInnerTransactions = async (sendingAccountId, receivingAccountId, amount, content, feePayer) => {
   let increasingAmount = parseInt(amount)
@@ -47,4 +49,39 @@ export const createOuterTransaction = async (
       responseData: JSON.stringify(responseData)
     }, {transaction: t})
   })
+}
+
+export const findAllOuterTransactions = async (query, raw = true) => {
+  if (query) {
+    const searchQuery = {
+      createdAt: {
+        [Op.lt]: query.endDate,
+        [Op.gt]: query.startDate
+      }
+    }
+    return await Models.OuterTransactions.findAll({where: searchQuery, raw})
+  }
+  return await Models.OuterTransactions.findAll({raw})
+}
+
+export const findAllOuterTransactionsOfRSAPartner = async (startDate, endDate, raw = true) => {
+  const searchQuery = {bankName: PARTNER_BANK_NAMES.RSA}
+  if (startDate && endDate) {
+    searchQuery.createdAt = {
+      [Op.lt]: new Date(endDate),
+      [Op.gt]: new Date(startDate)
+    }
+  }
+  return await Models.OuterTransactions.findAll({where: searchQuery, raw})
+}
+
+export const findAllOuterTransactionsOfPGPPartner = async (startDate, endDate, raw = true) => {
+  const searchQuery = {bankName: PARTNER_BANK_NAMES.PGP}
+  if (startDate && endDate) {
+    searchQuery.createdAt = {
+      [Op.lt]: new Date(endDate * 1000),
+      [Op.gt]: new Date(startDate * 1000)
+    }
+  }
+  return await Models.OuterTransactions.findAll({where: searchQuery, raw})
 }
