@@ -1,3 +1,4 @@
+import {isNil} from 'lodash'
 import * as accountService from '../account/account.service'
 import {MESSAGE, ACCOUNT_TYPES, PARTNER_BANK_NAMES} from '../../constants'
 import {debug} from '../../utils'
@@ -216,6 +217,94 @@ export const findAllOuterTransactions = async (req, res, next) => {
   }
   catch (err) {
     debug.error(NAMESPACE, 'Error occured while  all outer transactions', err)
+    return res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json({
+      message: MESSAGE.INTERNAL_SERVER_ERROR
+    })
+  }
+}
+
+export const getInnerTransactionByUserId = async (req, res, next) => {
+  try {
+    const {page = 1, limit = null, isSending} = req.query
+    const offset = isNil(limit) ? 0 : (page - 1) * limit
+    const {id: userId} = req.user
+
+    const accounts = await accountService.findAllAccountsOfUser(userId)
+    const accountIds = accounts.map(acc => acc.id)
+    let accountInstances
+    if (isNil(isSending)) {
+      accountInstances = {
+        sendingAccountIds: accountIds,
+        receivingAccountIds: accountIds
+      }
+    }
+    else if (isSending == 'true') {
+      accountInstances = {
+        sendingAccountIds: accountIds,
+        receivingAccountIds: []
+      }
+    }
+    else {
+      accountInstances = {
+        sendingAccountIds: [],
+        receivingAccountIds: accountIds
+      }
+    }
+
+    const transactions = await transactionService.getInnerTransactionByAccounts(accountInstances, {
+      offset, limit
+    })
+
+    return res.status(httpStatusCodes.OK).json({
+      payload: transactions
+    })
+  }
+  catch (err) {
+    debug.error(NAMESPACE, 'Error occured while getting inner transaction by userId', err)
+    return res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json({
+      message: MESSAGE.INTERNAL_SERVER_ERROR
+    })
+  }
+}
+
+export const getOuterTransactionByUserId = async (req, res, next) => {
+  try {
+    const {page = 1, limit = null, isSending} = req.query
+    const offset = isNil(limit) ? 0 : (page - 1) * limit
+    const {id: userId} = req.user
+
+    const accounts = await accountService.findAllAccountsOfUser(userId)
+    const accountIds = accounts.map(acc => acc.id)
+    let accountInstances
+    if (isNil(isSending)) {
+      accountInstances = {
+        sendingAccountIds: accountIds,
+        receivingAccountIds: accountIds
+      }
+    }
+    else if (isSending == 'true') {
+      accountInstances = {
+        sendingAccountIds: accountIds,
+        receivingAccountIds: []
+      }
+    }
+    else {
+      accountInstances = {
+        sendingAccountIds: [],
+        receivingAccountIds: accountIds
+      }
+    }
+
+    const transactions = await transactionService.getOuterTransactionByAccounts(accountInstances, {
+      offset, limit
+    })
+
+    return res.status(httpStatusCodes.OK).json({
+      payload: transactions
+    })
+  }
+  catch (err) {
+    debug.error(NAMESPACE, 'Error occured while getting outer transaction by userId', err)
     return res.status(httpStatusCodes.INTERNAL_SERVER_ERROR).json({
       message: MESSAGE.INTERNAL_SERVER_ERROR
     })

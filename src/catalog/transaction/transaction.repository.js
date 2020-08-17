@@ -1,3 +1,4 @@
+import {isEmpty} from 'lodash'
 import Models from '../../../models/all'
 import {sequelize} from '../../db'
 import {TRANSACTION_FEE, TRANSACTION_FEE_PAYER, PARTNER_BANK_NAMES} from '../../constants'
@@ -84,4 +85,46 @@ export const findAllOuterTransactionsOfPGPPartner = async (startDate, endDate, r
     }
   }
   return await Models.OuterTransactions.findAll({where: searchQuery, raw})
+}
+
+export const getInnerTransactionByAccounts = async ({sendingAccountIds, receivingAccountIds}, opt) => {
+  const {raw = true, offset = 1, limit = null} = opt
+  const condition = {}
+  if (!isEmpty(sendingAccountIds)) condition.sendingAccountId = sendingAccountIds
+  if (!isEmpty(receivingAccountIds)) condition.receivingAccountId = receivingAccountIds
+
+  const instances = await Models.InnerTransactions.findAndCountAll({
+    where: {
+      ...condition
+    },
+    order: [
+      ['createdAt', 'DESC']
+    ],
+    raw,
+    offset,
+    limit
+  })
+
+  return instances
+}
+
+export const getOuterTransactionByAccounts = async ({sendingAccountIds, receivingAccountIds}, opt) => {
+  const {raw = true, offset = 1, limit = null} = opt
+  const condition = {}
+  if (!isEmpty(sendingAccountIds)) condition.sendingAccountId = sendingAccountIds
+  if (!isEmpty(receivingAccountIds)) condition.receivingAccountId = receivingAccountIds
+
+  const instances = await Models.OuterTransactions.findAndCountAll({
+    where: {
+      ...condition
+    },
+    order: [
+      ['createdAt', 'DESC']
+    ],
+    raw,
+    offset,
+    limit
+  })
+
+  return instances
 }
