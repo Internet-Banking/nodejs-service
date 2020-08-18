@@ -12,6 +12,7 @@ import employeeRoute from './catalog/employee/employee.route'
 import userRoute from './catalog/user/user.route'
 import accountRoute from './catalog/account/account.route'
 import transactionRoute from './catalog/transaction/transaction.route'
+import debtReminderRoute from './catalog/debt_reminder/debt_reminder.route'
 
 import {ADMIN_FRONTEND_URL, CUSTOMER_FRONTEND_URL, EMPLOYEE_FRONTEND_URL} from './config'
 
@@ -41,6 +42,7 @@ app.use('/employee', employeeRoute)
 app.use('/user', userRoute)
 app.use('/account', accountRoute)
 app.use('/transaction', transactionRoute)
+app.use('/debtReminder', debtReminderRoute)
 
 //handling 'Not found' error
 //if the url does not match any above route => not found error
