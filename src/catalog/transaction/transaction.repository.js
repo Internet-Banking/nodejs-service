@@ -97,9 +97,7 @@ export const getInnerTransactionByAccounts = async ({sendingAccountIds, receivin
     where: {
       ...condition
     },
-    order: [
-      ['createdAt', 'DESC']
-    ],
+    order: [['createdAt', 'DESC']],
     raw,
     offset,
     limit
@@ -118,9 +116,7 @@ export const getOuterTransactionByAccounts = async ({sendingAccountIds, receivin
     where: {
       ...condition
     },
-    order: [
-      ['createdAt', 'DESC']
-    ],
+    order: [['createdAt', 'DESC']],
     raw,
     offset,
     limit

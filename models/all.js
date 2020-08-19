@@ -15,6 +15,8 @@ import PartnerResponseLogs from './partner_response_logs'
 
 import OTP from './otp'
 
+import DebtReminders from './debt-reminder'
+
 Users.hasMany(Accounts, {foreignKey: 'userId'})
 Accounts.belongsTo(Users, {foreignKey: 'userId'})
 
@@ -29,6 +31,9 @@ InnerTransactions.belongsTo(Accounts, {foreignKey: 'receivingAccountId'})
 
 OuterTransactions.belongsTo(Accounts, {foreignKey: 'sendingAccountId'})
 
+DebtReminders.belongsTo(Accounts, {foreignKey: 'sendingAccountId'})
+DebtReminders.belongsTo(Accounts, {foreignKey: 'receivingAccountId'})
+
 export default {
   Users,
   Accounts,
@@ -41,5 +46,6 @@ export default {
   OuterTransactions,
   PartnerRequestLogs,
   PartnerResponseLogs,
-  OTP
+  OTP,
+  DebtReminders
 }
