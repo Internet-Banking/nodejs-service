@@ -37,7 +37,7 @@
     "http-status-codes": "^1.4.0",
     "jsonwebtoken": "^8.5.1",
     "keymirror": "^0.1.1",
-    "moment": "^2.25.3",
+    "moment": "^2.29.4",
     "morgan": "^1.10.0",
     "node-rsa": "^1.0.8",
     "pg": "^8.1.0",
